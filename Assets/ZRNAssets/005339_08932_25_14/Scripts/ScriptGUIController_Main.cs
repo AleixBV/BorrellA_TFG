@@ -9,18 +9,18 @@ public class ScriptGUIController_Main : MonoBehaviour {
 	private bool menuVisible = false;
 	private bool shadowOn;
 
-    public bool testGUI = false;
+    [SerializeField] private bool testGUI = false;
 
-    public float VR_camera_Xoffset = -0.1f;
-    public float VR_camera_Zoffset = 0.2f;
-    public GameObject CameraContainer;
+    [SerializeField] private float VR_camera_Xoffset = -0.1f;
+    [SerializeField] private float VR_camera_Zoffset = 0.2f;
+    [SerializeField] private GameObject CameraContainer;
 
-    GameObject Canvas_PC;
-    GameObject Canvas_Controller;
-    GameObject Canvas_Loading;
-    private GameObject Canvases;
+    [SerializeField] private GameObject Canvas_PC;
+    [SerializeField] private GameObject Canvas_Controller;
+    [SerializeField] private GameObject Canvas_Loading;
+    [SerializeField] private GameObject Canvases;
 
-    public GameObject Player_Vehicle;
+    [SerializeField] private GameObject Player_Vehicle;
 
     private float timer_check_input;
 
@@ -37,19 +37,6 @@ public class ScriptGUIController_Main : MonoBehaviour {
 
         //GetComponent<AmbientController>().changeShadow(true);
         shadowOn = true;
-
-        Canvases = GameObject.Find("Canvases");
-
-        Canvas_PC = GameObject.Find("Canvas_PC");
-        Canvas_Controller = GameObject.Find("Canvas_Controller");
-        Canvas_Loading = GameObject.Find("Canvas_Loading");
-
-        if (!Canvas_PC || !Canvas_Controller || !Canvas_Loading || !Canvases)
-        {
-            Debug.LogError("can't find one Canvas");
-
-            Application.Quit();
-        }
 
         Canvas_Loading.SetActive(false);
 

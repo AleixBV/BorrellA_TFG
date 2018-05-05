@@ -3700,6 +3700,11 @@ Skybox:
   m_GameObject: {fileID: 1832390}
   m_Enabled: 1
   m_CustomSkybox: {fileID: 2100000, guid: da976b1a4f7ebb949b0f71341e4f1821, type: 2}
+--- !u!1 &2192424 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1372557724121196, guid: 4dbd033de801e3944857934984253390,
+    type: 2}
+  m_PrefabInternal: {fileID: 701539878}
 --- !u!1001 &36754966
 Prefab:
   m_ObjectHideFlags: 0
@@ -4353,6 +4358,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &514932424 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1491869901357386, guid: 4dbd033de801e3944857934984253390,
+    type: 2}
+  m_PrefabInternal: {fileID: 701539878}
 --- !u!1001 &544799316
 Prefab:
   m_ObjectHideFlags: 0
@@ -5112,6 +5122,10 @@ Prefab:
         type: 2}
       propertyPath: m_Text
       value: Click X to Disable VR
+      objectReference: {fileID: 0}
+    - target: {fileID: 1372557724121196, guid: 4dbd033de801e3944857934984253390, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4dbd033de801e3944857934984253390, type: 2}
@@ -9022,6 +9036,16 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9966bef51f8cb6d4493dcebd711faeab, type: 3}
   m_IsPrefabParent: 0
+--- !u!1 &1026956950 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1372557724121196, guid: 4dbd033de801e3944857934984253390,
+    type: 2}
+  m_PrefabInternal: {fileID: 1693803714}
+--- !u!1 &1029672827 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1164004334265166, guid: 4dbd033de801e3944857934984253390,
+    type: 2}
+  m_PrefabInternal: {fileID: 701539878}
 --- !u!1 &1067113739
 GameObject:
   m_ObjectHideFlags: 0
@@ -9253,6 +9277,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testGUI: 0
+  Canvases: {fileID: 1026956950}
+  Canvas_PC: {fileID: 1857026592}
+  Canvas_Controller: {fileID: 1118118298}
+  Canvas_Loading: {fileID: 1236625510}
+  Canvases_VR: {fileID: 2192424}
+  Canvas_PC_VR: {fileID: 1029672827}
+  Canvas_Controller_VR: {fileID: 1936555591}
+  Canvas_Loading_VR: {fileID: 514932424}
+  Main_Camera: {fileID: 1832390}
 --- !u!114 &1097396079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9472,6 +9505,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c925872ce3bfa384589bf34b953d5a65, type: 3}
   m_IsPrefabParent: 0
+--- !u!1 &1118118298 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1833323013837434, guid: 4dbd033de801e3944857934984253390,
+    type: 2}
+  m_PrefabInternal: {fileID: 1693803714}
 --- !u!1 &1176457010
 GameObject:
   m_ObjectHideFlags: 0
@@ -9688,6 +9726,11 @@ Transform:
   m_Father: {fileID: 624995746}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1236625510 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1491869901357386, guid: 4dbd033de801e3944857934984253390,
+    type: 2}
+  m_PrefabInternal: {fileID: 1693803714}
 --- !u!1001 &1253274156
 Prefab:
   m_ObjectHideFlags: 0
@@ -10706,7 +10749,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1372557724121196, guid: 4dbd033de801e3944857934984253390, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1498082568613060, guid: 4dbd033de801e3944857934984253390, type: 2}
       propertyPath: m_Name
@@ -11004,6 +11047,11 @@ Transform:
   m_Father: {fileID: 85336423}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1857026592 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1164004334265166, guid: 4dbd033de801e3944857934984253390,
+    type: 2}
+  m_PrefabInternal: {fileID: 1693803714}
 --- !u!1001 &1857119751
 Prefab:
   m_ObjectHideFlags: 0
@@ -11284,6 +11332,11 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1918519408}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1936555591 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1833323013837434, guid: 4dbd033de801e3944857934984253390,
+    type: 2}
+  m_PrefabInternal: {fileID: 701539878}
 --- !u!1001 &1945597843
 Prefab:
   m_ObjectHideFlags: 0

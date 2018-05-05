@@ -10,16 +10,23 @@ public class ScriptGUIController : MonoBehaviour {
 	private int operateCameraNumber;
 	private bool shadowOn;
 
-    public bool testGUI = false;
+    [SerializeField] private bool testGUI = false;
 
-    GameObject Canvas_PC;
-    GameObject Canvas_Controller;
-    GameObject Canvas_Loading;
+    [SerializeField] GameObject Canvases;
+    [SerializeField] GameObject Canvas_PC;
+    [SerializeField] GameObject Canvas_Controller;
+    [SerializeField] GameObject Canvas_Loading;
 
-    GameObject Canvases;
-    GameObject Canvases_VR;
+    [SerializeField] GameObject Canvases_VR;
+    [SerializeField] GameObject Canvas_PC_VR;
+    [SerializeField] GameObject Canvas_Controller_VR;
+    [SerializeField] GameObject Canvas_Loading_VR;
 
-    GameObject Main_Camera;
+    private GameObject Canvas_PC_Ref;
+    private GameObject Canvas_Controller_Ref;
+    private GameObject Canvas_Loading_Ref;
+
+    [SerializeField] GameObject Main_Camera;
     
     private Vector3 camera_init_position;
     private Quaternion camera_init_rotation;
@@ -58,30 +65,24 @@ public class ScriptGUIController : MonoBehaviour {
 
 		GetComponent<AmbientController>().changeShadow(true);
 		shadowOn = true;
-        
-        Canvases = GameObject.Find("Canvases");
-        Canvases_VR = GameObject.Find("Canvases VR");
 
         if(XRDevice.isPresent && !Public_Vars.forced_VR_disabled)
         {
             Canvases.SetActive(false);
             Canvases_VR.SetActive(true);
+
+            Canvas_PC_Ref = Canvas_PC_VR;
+            Canvas_Controller_Ref = Canvas_Controller_VR;
+            Canvas_Loading_Ref = Canvas_Loading_VR;
         }
         else
         {
             Canvases.SetActive(true);
             Canvases_VR.SetActive(false);
-        }
 
-        Canvas_PC = GameObject.Find("Canvas_PC");
-        Canvas_Controller = GameObject.Find("Canvas_Controller");
-        Canvas_Loading = GameObject.Find("Canvas_Loading");
-
-        if (!Canvases || !Canvas_PC || !Canvas_Controller || !Canvas_Loading || !Canvases)
-        {
-            Debug.LogError("can't find one Canvas");
-
-            QuitGame();
+            Canvas_PC_Ref = Canvas_PC;
+            Canvas_Controller_Ref = Canvas_Controller;
+            Canvas_Loading_Ref = Canvas_Loading;
         }
         
         Canvas_Loading.SetActive(false);
@@ -362,9 +363,9 @@ public class ScriptGUIController : MonoBehaviour {
             Canvases.SetActive(true);
             Canvases_VR.SetActive(false);
 
-            Canvas_PC = GameObject.Find("Canvas_PC");
-            Canvas_Controller = GameObject.Find("Canvas_Controller");
-            Canvas_Loading = GameObject.Find("Canvas_Loading");
+            Canvas_PC_Ref = Canvas_PC;
+            Canvas_Controller_Ref = Canvas_Controller;
+            Canvas_Loading_Ref = Canvas_Loading;
 
             timer_check_input = 0.0f;
         }
@@ -386,9 +387,9 @@ public class ScriptGUIController : MonoBehaviour {
             Canvases.SetActive(false);
             Canvases_VR.SetActive(true);
 
-            Canvas_PC = GameObject.Find("Canvas_PC");
-            Canvas_Controller = GameObject.Find("Canvas_Controller");
-            Canvas_Loading = GameObject.Find("Canvas_Loading");
+            Canvas_PC_Ref = Canvas_PC_VR;
+            Canvas_Controller_Ref = Canvas_Controller_VR;
+            Canvas_Loading_Ref = Canvas_Loading_VR;
         }
         else
         {
