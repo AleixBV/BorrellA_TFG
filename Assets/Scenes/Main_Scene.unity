@@ -494,7 +494,7 @@ GameObject:
   - component: {fileID: 25398848}
   m_Layer: 0
   m_Name: mainLights
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -855,7 +855,7 @@ GameObject:
   - component: {fileID: 61951883}
   m_Layer: 0
   m_Name: wheelMesh
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1075,7 +1075,7 @@ GameObject:
   - component: {fileID: 72754107}
   m_Layer: 0
   m_Name: CenterOfMass
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2234,7 +2234,7 @@ GameObject:
   - component: {fileID: 178242371}
   m_Layer: 0
   m_Name: flashLeft
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3909,7 +3909,7 @@ GameObject:
   - component: {fileID: 309114757}
   m_Layer: 0
   m_Name: wheelMesh
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5435,7 +5435,7 @@ GameObject:
   - component: {fileID: 455634537}
   m_Layer: 0
   m_Name: 1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5628,7 +5628,7 @@ GameObject:
   - component: {fileID: 469420156}
   m_Layer: 0
   m_Name: DoorPosition2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6154,7 +6154,7 @@ GameObject:
   - component: {fileID: 538776657}
   m_Layer: 2
   m_Name: Camera3
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6366,7 +6366,7 @@ GameObject:
   - component: {fileID: 542490093}
   m_Layer: 0
   m_Name: RightMirror
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7794,7 +7794,7 @@ GameObject:
   - component: {fileID: 664777922}
   m_Layer: 0
   m_Name: Vehicle3
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10069,7 +10069,7 @@ GameObject:
   - component: {fileID: 851261511}
   m_Layer: 2
   m_Name: Cameras
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10412,7 +10412,7 @@ GameObject:
   - component: {fileID: 881324567}
   m_Layer: 0
   m_Name: reverseLight
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10926,7 +10926,7 @@ GameObject:
   - component: {fileID: 917680278}
   m_Layer: 0
   m_Name: collider
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11331,7 +11331,7 @@ GameObject:
   - component: {fileID: 955829445}
   m_Layer: 0
   m_Name: 4
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12174,7 +12174,7 @@ GameObject:
   - component: {fileID: 1017410985}
   m_Layer: 2
   m_Name: Camera1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12321,7 +12321,7 @@ GameObject:
   - component: {fileID: 1023353272}
   m_Layer: 0
   m_Name: wheelMesh
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13085,7 +13085,7 @@ GameObject:
   - component: {fileID: 1093474404}
   m_Layer: 2
   m_Name: Camera4
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13224,7 +13224,7 @@ GameObject:
   - component: {fileID: 1103059705}
   m_Layer: 0
   m_Name: volante
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13603,7 +13603,7 @@ GameObject:
   - component: {fileID: 1126206379}
   m_Layer: 0
   m_Name: brakeLights
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14074,7 +14074,7 @@ GameObject:
   - component: {fileID: 1176447568}
   m_Layer: 0
   m_Name: Vehicle
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15243,7 +15243,7 @@ GameObject:
   - component: {fileID: 1234782174}
   m_Layer: 0
   m_Name: headLights
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15711,7 +15711,7 @@ GameObject:
   - component: {fileID: 1280415936}
   m_Layer: 0
   m_Name: LeftMirror
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15887,7 +15887,7 @@ GameObject:
   - component: {fileID: 1302690938}
   m_Layer: 0
   m_Name: flashRight
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16017,7 +16017,7 @@ GameObject:
   - component: {fileID: 1308718523}
   m_Layer: 4
   m_Name: espelhoEsq
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17131,7 +17131,7 @@ GameObject:
   - component: {fileID: 1408167995}
   m_Layer: 4
   m_Name: espelhoDir
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17708,7 +17708,7 @@ GameObject:
   - component: {fileID: 1447334077}
   m_Layer: 0
   m_Name: wheelColliders
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19001,7 +19001,7 @@ GameObject:
   - component: {fileID: 1534538443}
   m_Layer: 0
   m_Name: 2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19336,7 +19336,7 @@ GameObject:
   - component: {fileID: 1585226187}
   m_Layer: 0
   m_Name: wheelMeshes
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19731,7 +19731,7 @@ GameObject:
   - component: {fileID: 1638740903}
   m_Layer: 0
   m_Name: 4
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20343,7 +20343,7 @@ GameObject:
   - component: {fileID: 1686451900}
   m_Layer: 0
   m_Name: 1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20429,6 +20429,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
+  - {fileID: 1794098802}
   - {fileID: 519441396}
   - {fileID: 2070455111}
   m_Father: {fileID: 0}
@@ -21412,7 +21413,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 405464, guid: c925872ce3bfa384589bf34b953d5a65, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 405464, guid: c925872ce3bfa384589bf34b953d5a65, type: 3}
       propertyPath: m_LocalScale.x
@@ -21755,6 +21756,60 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300542, guid: c925872ce3bfa384589bf34b953d5a65, type: 3}
+--- !u!1 &1794098801
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1794098802}
+  - component: {fileID: 1794098803}
+  - component: {fileID: 1794098804}
+  m_Layer: 0
+  m_Name: Down_Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1794098802
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1794098801}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -30, y: -0.25, z: -30}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1689592751}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1794098803
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1794098801}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 150, y: 1, z: 150}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1794098804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1794098801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c7ce164f47453743931277acd32eb26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Gui_Cotroller: {fileID: 1927154000}
 --- !u!1 &1795476482 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100464, guid: c925872ce3bfa384589bf34b953d5a65, type: 3}
@@ -21920,7 +21975,7 @@ GameObject:
   - component: {fileID: 1812241108}
   m_Layer: 0
   m_Name: Volant
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21951,7 +22006,7 @@ GameObject:
   - component: {fileID: 1812776935}
   m_Layer: 0
   m_Name: 2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22235,7 +22290,7 @@ GameObject:
   - component: {fileID: 1838602858}
   m_Layer: 0
   m_Name: collider (1)
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23126,7 +23181,7 @@ GameObject:
   - component: {fileID: 1904402550}
   m_Layer: 0
   m_Name: 3
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23229,7 +23284,7 @@ GameObject:
   - component: {fileID: 1912639683}
   m_Layer: 0
   m_Name: DoorPosition1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23490,6 +23545,9 @@ MonoBehaviour:
   Canvas_Loading: {fileID: 1033876333}
   Canvases: {fileID: 1033876332}
   Player_Vehicle: {fileID: 1176447567}
+  respawn_timer: 2.5
+  respawn_alpha: 0
+  respawn_color: {r: 1, g: 1, b: 1, a: 0}
 --- !u!1 &1930637502 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 101310, guid: c925872ce3bfa384589bf34b953d5a65, type: 3}
@@ -23785,7 +23843,7 @@ GameObject:
   - component: {fileID: 1951643664}
   m_Layer: 2
   m_Name: Camera2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25052,7 +25110,7 @@ GameObject:
   - component: {fileID: 2055114042}
   m_Layer: 2
   m_Name: Camera5
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25346,7 +25404,7 @@ Transform:
   - {fileID: 1468244996}
   - {fileID: 563173804}
   m_Father: {fileID: 1689592751}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2071868032 stripped
 GameObject:
@@ -25395,7 +25453,7 @@ GameObject:
   - component: {fileID: 2076577578}
   m_Layer: 0
   m_Name: Colliders
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25787,7 +25845,7 @@ GameObject:
   - component: {fileID: 2102372606}
   m_Layer: 0
   m_Name: wheelMesh
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26114,7 +26172,7 @@ GameObject:
   - component: {fileID: 2138677584}
   m_Layer: 0
   m_Name: 3
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

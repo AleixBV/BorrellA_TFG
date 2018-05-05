@@ -12,11 +12,13 @@ public class ScriptGUIController : MonoBehaviour {
 
     [SerializeField] private bool testGUI = false;
 
+    [Header("Canvases without VR")]
     [SerializeField] GameObject Canvases;
     [SerializeField] GameObject Canvas_PC;
     [SerializeField] GameObject Canvas_Controller;
     [SerializeField] GameObject Canvas_Loading;
 
+    [Header("Canvases with VR")]
     [SerializeField] GameObject Canvases_VR;
     [SerializeField] GameObject Canvas_PC_VR;
     [SerializeField] GameObject Canvas_Controller_VR;
@@ -26,6 +28,7 @@ public class ScriptGUIController : MonoBehaviour {
     private GameObject Canvas_Controller_Ref;
     private GameObject Canvas_Loading_Ref;
 
+    [Space(15)]
     [SerializeField] GameObject Main_Camera;
     
     private Vector3 camera_init_position;

@@ -11,10 +11,12 @@ public class ScriptGUIController_Main : MonoBehaviour {
 
     [SerializeField] private bool testGUI = false;
 
+    [Header("Camera")]
     [SerializeField] private float VR_camera_Xoffset = -0.1f;
     [SerializeField] private float VR_camera_Zoffset = 0.2f;
     [SerializeField] private GameObject CameraContainer;
 
+    [Header("Canvases")]
     [SerializeField] private GameObject Canvas_PC;
     [SerializeField] private GameObject Canvas_Controller;
     [SerializeField] private GameObject Canvas_Loading;
@@ -28,7 +30,14 @@ public class ScriptGUIController_Main : MonoBehaviour {
 
     private Vector3 camera_init_position;
     private Quaternion camera_init_rotation;
-    
+
+    [Header("Respawn")]
+    [SerializeField] private float respawn_timer = 2.5f;
+    [SerializeField] private Color respawn_color = new Color(255, 255, 255, 0);
+    private float respawn_alpha = 0.0f;
+    private bool respawn = false;
+    private Texture2D respawn_texture;
+
     // Use this for initialization
     void Start()
     {
@@ -43,12 +52,15 @@ public class ScriptGUIController_Main : MonoBehaviour {
         ChangeCanvasIfController();
         ChangeCameraIfVR();
 
-        ChangeCanvasVisibility();
-
         timer_check_input = 2.0f;
 
         camera_init_position = Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.localPosition;
         camera_init_rotation = Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.localRotation;
+
+        
+        respawn_texture = new Texture2D(1, 1);
+        respawn_texture.SetPixel(1, 1, respawn_color);
+        respawn_texture.Apply();
     }
 	
 	// Update is called once per frame
@@ -289,102 +301,29 @@ public class ScriptGUIController_Main : MonoBehaviour {
         timer_check_input = 0.0f;
     }
 
-    /*void OnGUI () {
+    public void SetRespawn() { respawn = true; }
 
-        if (testGUI)
+    private void OnGUI()
+    {
+        if(respawn)
         {
-            if (menuVisible == true)
+            if (respawn_alpha < 1.0f)
             {
-                GUI.BeginGroup(new Rect(50, 50, Screen.width - 100, 270));
+                respawn_alpha += Time.deltaTime / respawn_timer;
 
-                GUI.Box(new Rect(0, 0, Screen.width - 100, 270), "Control Menu");
-
-                if (GUI.Button(new Rect(Screen.width - 100 - 50, 10, 40, 40), "X"))
-                {
-                    menuVisible = false;
-                }
-
-                // ---------- Sky Control ----------
-                GUI.Label(new Rect(20, 40, 100, 30), "Sky Control");
-                if (GUI.Button(new Rect(20, 60, 80, 40), "Sunny"))
-                {
-                    GetComponent<AmbientController>().changeSkybox(AmbientController.AmbientType.AMBIENT_SKYBOX_SUNNY);
-                }
-                if (GUI.Button(new Rect(110, 60, 80, 40), "Cloud"))
-                {
-                    GetComponent<AmbientController>().changeSkybox(AmbientController.AmbientType.AMBIENT_SKYBOX_CLOUD);
-                }
-                if (GUI.Button(new Rect(200, 60, 80, 40), "Night"))
-                {
-                    GetComponent<AmbientController>().changeSkybox(AmbientController.AmbientType.AMBIENT_SKYBOX_NIGHT);
-                }
-
-                // ---------- Shadow Control ----------
-                GUI.Label(new Rect(20, 110, 100, 30), "Shadow Control");
-                if (GUI.Button(new Rect(20, 130, 80, 40), "On / Off"))
-                {
-                    if (shadowOn == false)
-                    {
-                        GetComponent<AmbientController>().changeShadow(true);
-                        shadowOn = true;
-                    }
-                    else
-                    {
-                        GetComponent<AmbientController>().changeShadow(false);
-                        shadowOn = false;
-                    }
-                }
-                GUI.Label(new Rect(120, 130, 100, 30), "TIme");
-                hSliderValue = GUI.HorizontalSlider(new Rect(120, 155, 150, 30), hSliderValue, 0.0f, 100.0f);
-                GetComponent<AmbientController>().rotateAmbientLight(hSliderValue);
-
-                // ---------- Effect Control ----------
-                GUI.Label(new Rect(20, 180, 100, 30), "Effect Control");
-                if (GUI.Button(new Rect(20, 200, 80, 40), "None"))
-                {
-                    GetComponent<AmbientController>().changeParticle(AmbientController.ParticleType.PARTICLE_NONE);
-                }
-                if (GUI.Button(new Rect(110, 200, 80, 40), "Wind"))
-                {
-                    GetComponent<AmbientController>().changeParticle(AmbientController.ParticleType.PARTICLE_WIND);
-                }
-                if (GUI.Button(new Rect(200, 200, 80, 40), "Rain"))
-                {
-                    GetComponent<AmbientController>().changeParticle(AmbientController.ParticleType.PARTICLE_RAIN);
-                }
-
-                // ---------- Camera Control ----------
-                if (operateCameraNumber < 100)
-                {
-                    GUI.Label(new Rect(400, 40, 100, 30), "Camera Control");
-                    if (GUI.Button(new Rect(400, 60, 50, 40), "<---"))
-                    {
-                        operateCameraNumber--;
-                        if (operateCameraNumber < 0)
-                        {
-                            operateCameraNumber = GetComponent<CameraController>().targetCameraNames.Count - 1;
-                        }
-                    }
-                    if (GUI.Button(new Rect(600, 60, 50, 40), "--->"))
-                    {
-                        operateCameraNumber++;
-                        if (operateCameraNumber > GetComponent<CameraController>().targetCameraNames.Count - 1)
-                        {
-                            operateCameraNumber = 0;
-                        }
-                    }
-                }
-
-                GUI.EndGroup();
+                if (respawn_alpha >= 1.0f)
+                    respawn_alpha = 1.0f;
             }
             else
             {
-                // ---------- Menu Button ----------
-                if (GUI.Button(new Rect(Screen.width - 120, 20, 100, 40), "Menu"))
-                {
-                    menuVisible = true;
-                }
+                SceneManager.LoadScene("Init_Scene");
             }
+
+            respawn_color.a = respawn_alpha;
+            respawn_texture.SetPixel(0, 0, respawn_color);
+            respawn_texture.Apply();
+
+            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), respawn_texture);
         }
-    }*/
+    }
 }
