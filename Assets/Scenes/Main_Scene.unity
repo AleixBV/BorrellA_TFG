@@ -8755,7 +8755,6 @@ GameObject:
   - component: {fileID: 743062188}
   - component: {fileID: 743062190}
   - component: {fileID: 743062189}
-  - component: {fileID: 743062192}
   m_Layer: 0
   m_Name: Camera_GPS
   m_TagString: Untagged
@@ -8819,29 +8818,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 743062187}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -349.1979, y: 175, z: -314.9085}
+  m_LocalRotation: {x: 0.53729963, y: 0, z: 0, w: 0.8433915}
+  m_LocalPosition: {x: 0, y: 0, z: -45}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 860162188}
-  m_Father: {fileID: 0}
+  m_Children: []
+  m_Father: {fileID: 2047852036}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &743062192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 743062187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02fabf8c3ec0d8447b46afc168e0cd45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1176447570}
-  height: 175
-  posDamping: 0.75
-  rotDamping: 1
+  m_LocalEulerAnglesHint: {x: 65, y: 0, z: 0}
 --- !u!1 &743996783 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 101078, guid: c925872ce3bfa384589bf34b953d5a65, type: 3}
@@ -10371,11 +10354,11 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 860162187}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 2, z: 150}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 0, y: -160, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
-  m_Father: {fileID: 743062191}
+  m_Father: {fileID: 2047852036}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
 --- !u!23 &860162189
@@ -25660,6 +25643,52 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300764, guid: c925872ce3bfa384589bf34b953d5a65, type: 3}
+--- !u!1 &2047852035
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2047852036}
+  - component: {fileID: 2047852037}
+  m_Layer: 0
+  m_Name: Camera_GPS_Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2047852036
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2047852035}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -349.1979, y: 175, z: -314.9085}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 860162188}
+  - {fileID: 743062191}
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2047852037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2047852035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02fabf8c3ec0d8447b46afc168e0cd45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1176447570}
+  height: 175
+  posDamping: 0.75
+  rotDamping: 1
 --- !u!1 &2048635717 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 101608, guid: c925872ce3bfa384589bf34b953d5a65, type: 3}
