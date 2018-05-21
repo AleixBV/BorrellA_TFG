@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ScriptGUIController_Main : MonoBehaviour {
 
@@ -17,8 +19,7 @@ public class ScriptGUIController_Main : MonoBehaviour {
     [SerializeField] private GameObject CameraContainer;
 
     [Header("Canvases")]
-    [SerializeField] private GameObject Canvas_PC;
-    [SerializeField] private GameObject Canvas_Controller;
+    [SerializeField] private GameObject Canvas;
     [SerializeField] private GameObject Canvas_Loading;
     [SerializeField] private GameObject Canvases;
 
@@ -30,6 +31,7 @@ public class ScriptGUIController_Main : MonoBehaviour {
 
     private Vector3 camera_init_position;
     private Quaternion camera_init_rotation;
+    private int camera_init_cullingmask;
 
     [Header("Respawn")]
     [SerializeField] private float respawn_timer = 2.5f;
@@ -49,15 +51,17 @@ public class ScriptGUIController_Main : MonoBehaviour {
 
         Canvas_Loading.SetActive(false);
 
-        ChangeCanvasIfController();
-        ChangeCameraIfVR();
+        if (Public_Vars.forced_controller_disabled)
+            ForceControllerDisabled(Public_Vars.forced_controller_disabled);
+        else
+            ChangeCanvasIfController(true);
 
         timer_check_input = 2.0f;
 
         camera_init_position = Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.localPosition;
         camera_init_rotation = Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.localRotation;
+        camera_init_cullingmask = Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.cullingMask;
 
-        
         respawn_texture = new Texture2D(1, 1);
         respawn_texture.SetPixel(1, 1, respawn_color);
         respawn_texture.Apply();
@@ -71,7 +75,7 @@ public class ScriptGUIController_Main : MonoBehaviour {
             {
                 if (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled)
                 {
-                    if (Input.GetKeyDown(KeyCode.Joystick1Button0))//A
+                    /*if (Input.GetKeyDown(KeyCode.Joystick1Button0))//A
                         ResumeMainGame();
                     if (Input.GetKeyDown(KeyCode.Joystick1Button1))//B
                         QuitMainGame();
@@ -81,12 +85,23 @@ public class ScriptGUIController_Main : MonoBehaviour {
                         else
                             ForceVRDisabled(false);
                     if ((!XRDevice.isPresent || Public_Vars.forced_VR_disabled) && Input.GetKeyDown(KeyCode.Joystick1Button3))//Y
-                        ForceControllerDisabled(true);
+                        ForceControllerDisabled(true);*/
                     if (Input.GetKeyDown(KeyCode.Joystick1Button7))//Start
                         ChangeCanvasVisibility();
                 }
-                else if (Input.GetKeyDown(KeyCode.Escape))
+                if (Input.GetKeyDown(KeyCode.Escape))
                     ChangeCanvasVisibility();
+
+                
+                timer_check_input -= Time.fixedDeltaTime;
+                if (timer_check_input <= 0.0f)
+                {
+                    timer_check_input = 2.0f;
+                    if (!Public_Vars.forced_controller_disabled)
+                        ChangeCanvasIfController();
+                    else
+                        ChangeCameraIfVR();
+                }
             }
             else
             {
@@ -95,18 +110,10 @@ public class ScriptGUIController_Main : MonoBehaviour {
                     if (Input.GetKeyDown(KeyCode.Joystick1Button7))//Start
                         ChangeCanvasVisibility();
                 }
-                else if (Input.GetKeyDown(KeyCode.Escape))
+                if (Input.GetKeyDown(KeyCode.Escape))
                     ChangeCanvasVisibility();
-            }
 
-            timer_check_input -= Time.fixedDeltaTime;
-            if (timer_check_input <= 0.0f)
-            {
-                timer_check_input = 2.0f;
-                if (!Public_Vars.forced_controller_disabled)
-                    ChangeCanvasIfController();
-
-                ChangeCameraIfVR();
+                timer_check_input = 0.0f;
             }
         }
     }
@@ -125,24 +132,38 @@ public class ScriptGUIController_Main : MonoBehaviour {
         ChangeCanvasVisibility();
     }
 
-    void ChangeCanvasIfController()
+    void ChangeCanvasIfController(bool clean = false)
     {
         if (Input.GetJoystickNames().Length > 0 && Input.GetJoystickNames()[0].Length > 0)
         {
-            Public_Vars.is_controller_enabled = true;
-            //Debug.Log("controller enabled");
+            if (!Public_Vars.is_controller_enabled || clean)
+            {
+                Public_Vars.is_controller_enabled = true;
+                //Debug.Log("controller connected");
 
-            Canvas_PC.SetActive(false);
-            Canvas_Controller.SetActive(true);
+                EventSystem.current.sendNavigationEvents = true;
+                Canvas.transform.GetChild(1).GetComponent<Button>().Select();
+                Canvas.transform.GetChild(1).GetComponent<Button>().OnSelect(null);//make sure to highlight the button
+
+                SetButtonActive(Canvas.transform.Find("Button_Enable_Controller").gameObject, false);
+                SetButtonActive(Canvas.transform.Find("Button_Disable_Controller").gameObject, true);
+            }
         }
         else
         {
-            Public_Vars.is_controller_enabled = false;
-            //Debug.Log("controller not enabled");
+            if (Public_Vars.is_controller_enabled || clean)
+            {
+                Public_Vars.is_controller_enabled = false;
+                //Debug.Log("controller not connected");
 
-            Canvas_PC.SetActive(true);
-            Canvas_Controller.SetActive(false);
+                EventSystem.current.sendNavigationEvents = false;
+
+                SetButtonActive(Canvas.transform.Find("Button_Enable_Controller").gameObject, false);
+                SetButtonActive(Canvas.transform.Find("Button_Disable_Controller").gameObject, false);
+            }
         }
+
+        ChangeCameraIfVR();
     }
 
     void ChangeCameraIfVR()
@@ -156,13 +177,10 @@ public class ScriptGUIController_Main : MonoBehaviour {
             Vector3 tmp = new Vector3(VR_camera_Xoffset, 0.0f, VR_camera_Zoffset);
             CameraContainer.transform.localPosition = tmp;
 
-            Canvas_PC.transform.Find("Button_Enable_VR").gameObject.SetActive(false);
-            Canvas_PC.transform.Find("Button_Disable_VR").gameObject.SetActive(true);
+            SetButtonActive(Canvas.transform.Find("Button_Enable_VR").gameObject, false);
+            SetButtonActive(Canvas.transform.Find("Button_Disable_VR").gameObject, true);
 
-            Canvas_Controller.transform.Find("Button_Enable_VR").gameObject.SetActive(false);
-            Canvas_Controller.transform.Find("Button_Disable_VR").gameObject.SetActive(true);
-
-            Canvas_Controller.transform.Find("Button_Disable_Controller").gameObject.SetActive(false);
+            SetButtonActive(Canvas.transform.Find("Button_Disable_Controller").gameObject, false);
 
             Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0].rotationType = CameraTypeClass.TipoRotac.VR_Nothing;
         }
@@ -174,13 +192,8 @@ public class ScriptGUIController_Main : MonoBehaviour {
 
             CameraContainer.transform.localPosition = Vector3.zero;
 
-            Canvas_PC.transform.Find("Button_Disable_VR").gameObject.SetActive(false);
-            Canvas_Controller.transform.Find("Button_Disable_VR").gameObject.SetActive(false);
-
-            Canvas_PC.transform.Find("Button_Enable_VR").gameObject.SetActive(true);
-            Canvas_Controller.transform.Find("Button_Enable_VR").gameObject.SetActive(true);
-
-            Canvas_Controller.transform.Find("Button_Disable_Controller").gameObject.SetActive(true);
+            SetButtonActive(Canvas.transform.Find("Button_Disable_VR").gameObject, false);
+            SetButtonActive(Canvas.transform.Find("Button_Enable_VR").gameObject, true);
 
             Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0].rotationType = CameraTypeClass.TipoRotac.ETS_StyleCamera;
         }
@@ -192,19 +205,18 @@ public class ScriptGUIController_Main : MonoBehaviour {
 
         if (!b)
         {
-            Canvas_PC.transform.Find("Button_Enable_Controller").gameObject.SetActive(false);
-            ChangeCanvasIfController();
+            SetButtonActive(Canvas.transform.Find("Button_Enable_Controller").gameObject, false);
+            ChangeCanvasIfController(true);
         }
         else
         {
             Public_Vars.is_controller_enabled = false;
+            
+            SetButtonActive(Canvas.transform.Find("Button_Enable_Controller").gameObject, true);
+            SetButtonActive(Canvas.transform.Find("Button_Disable_Controller").gameObject, false);
 
-            Canvas_PC.SetActive(true);
-            Canvas_Controller.SetActive(false);
-            Canvas_PC.transform.Find("Button_Enable_Controller").gameObject.SetActive(true);
+            EventSystem.current.sendNavigationEvents = false;
         }
-
-        timer_check_input = 0.0f;
     }
 
     public void ForceVRDisabled(bool b)
@@ -226,8 +238,11 @@ public class ScriptGUIController_Main : MonoBehaviour {
 
             XRSettings.LoadDeviceByName("");
             XRSettings.enabled = !b;
-
-            timer_check_input = 0.0f;
+            
+            if (Public_Vars.forced_controller_disabled)
+                ForceControllerDisabled(Public_Vars.forced_controller_disabled);
+            else
+                ChangeCanvasIfController(true);
         }
     }
 
@@ -238,8 +253,7 @@ public class ScriptGUIController_Main : MonoBehaviour {
 
         Canvases.SetActive(true);
 
-        Canvas_PC.SetActive(false);
-        Canvas_Controller.SetActive(false);
+        Canvas.SetActive(false);
 
         Canvas_Loading.SetActive(true);
 
@@ -257,13 +271,17 @@ public class ScriptGUIController_Main : MonoBehaviour {
             Time.timeScale = 0;
 
             Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.cullingMask = 1 << 5; //UI Layer
+
+            EventSystem.current.sendNavigationEvents = true;
+            Canvas.transform.GetChild(1).GetComponent<Button>().Select();
+            Canvas.transform.GetChild(1).GetComponent<Button>().OnSelect(null);//make sure to highlight the button
         }
         else
         {
             AudioListener.pause = false;
             Time.timeScale = 1;
 
-            Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.cullingMask = -1; //Default Layer
+            Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.cullingMask = camera_init_cullingmask; //Initial Layer
         }
 
         if (XRDevice.isPresent && !Public_Vars.forced_VR_disabled)
@@ -282,7 +300,7 @@ public class ScriptGUIController_Main : MonoBehaviour {
     IEnumerator LoadDevice(string str)
     {
         Vector3 camera_old_position = Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.localPosition;
-        Quaternion camera_old_rotation = Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.rotation;
+        Quaternion camera_old_rotation = Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.localRotation;
 
         XRSettings.LoadDeviceByName(str);
         yield return null;
@@ -298,7 +316,10 @@ public class ScriptGUIController_Main : MonoBehaviour {
             Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.localRotation = camera_old_rotation;
         }
 
-        timer_check_input = 0.0f;
+        if (Public_Vars.forced_controller_disabled)
+            ForceControllerDisabled(Public_Vars.forced_controller_disabled);
+        else
+            ChangeCanvasIfController(true);
     }
 
     public void SetRespawn() { respawn = true; }
@@ -325,5 +346,11 @@ public class ScriptGUIController_Main : MonoBehaviour {
 
             GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), respawn_texture);
         }
+    }
+
+    private void SetButtonActive(GameObject Button, bool active)
+    {
+        Button.SetActive(active);
+        Button.GetComponent<Button>().interactable = active;
     }
 }

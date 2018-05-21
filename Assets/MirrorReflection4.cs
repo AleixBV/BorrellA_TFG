@@ -12,7 +12,7 @@ public class MirrorReflection4 : MonoBehaviour
 
     [Space(15)]
     public bool m_DisablePixelLights = true;
-    public int m_TextureSize = 256;
+    private int m_TextureSize = 1920;
     public float m_ClipPlaneOffset = 0.07f;
 
     public LayerMask m_ReflectLayers = -1;
@@ -23,6 +23,11 @@ public class MirrorReflection4 : MonoBehaviour
     private int m_OldReflectionTextureSize = 0;
 
     private static bool s_InsideRendering = false;
+
+    private void Update()
+    {
+        m_TextureSize = Screen.currentResolution.width;
+    }
 
     // This is called when it's known that the object will be rendered by some
     // camera. We render reflections and do other updates here.

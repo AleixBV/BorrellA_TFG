@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ScriptGUIController : MonoBehaviour {
 
@@ -11,21 +13,19 @@ public class ScriptGUIController : MonoBehaviour {
 	private bool shadowOn;
 
     [SerializeField] private bool testGUI = false;
+    [SerializeField] private bool testVR = false;
 
     [Header("Canvases without VR")]
     [SerializeField] GameObject Canvases;
-    [SerializeField] GameObject Canvas_PC;
-    [SerializeField] GameObject Canvas_Controller;
+    [SerializeField] GameObject Canvas;
     [SerializeField] GameObject Canvas_Loading;
 
     [Header("Canvases with VR")]
     [SerializeField] GameObject Canvases_VR;
-    [SerializeField] GameObject Canvas_PC_VR;
-    [SerializeField] GameObject Canvas_Controller_VR;
+    [SerializeField] GameObject Canvas_VR;
     [SerializeField] GameObject Canvas_Loading_VR;
 
-    private GameObject Canvas_PC_Ref;
-    private GameObject Canvas_Controller_Ref;
+    private GameObject Canvas_Ref;
     private GameObject Canvas_Loading_Ref;
 
     [Space(15)]
@@ -42,8 +42,6 @@ public class ScriptGUIController : MonoBehaviour {
 
     private void Awake()
     {
-        Main_Camera = GameObject.Find("Main Camera");
-
         if (!Main_Camera)
         {
             Debug.LogError("can't find Main Camera");
@@ -63,19 +61,18 @@ public class ScriptGUIController : MonoBehaviour {
 
         loading_scene = false;
 
-		GetComponent<CameraController>().ChangeCamera(0);
-		operateCameraNumber = 0;
+		GetComponent<CameraController>().ChangeCamera(101);
+		operateCameraNumber = 101;
 
 		GetComponent<AmbientController>().changeShadow(true);
 		shadowOn = true;
 
-        if(XRDevice.isPresent && !Public_Vars.forced_VR_disabled)
+        if((testVR || XRDevice.isPresent) && !Public_Vars.forced_VR_disabled)
         {
             Canvases.SetActive(false);
             Canvases_VR.SetActive(true);
 
-            Canvas_PC_Ref = Canvas_PC_VR;
-            Canvas_Controller_Ref = Canvas_Controller_VR;
+            Canvas_Ref = Canvas_VR;
             Canvas_Loading_Ref = Canvas_Loading_VR;
         }
         else
@@ -83,14 +80,19 @@ public class ScriptGUIController : MonoBehaviour {
             Canvases.SetActive(true);
             Canvases_VR.SetActive(false);
 
-            Canvas_PC_Ref = Canvas_PC;
-            Canvas_Controller_Ref = Canvas_Controller;
+            Canvas_Ref = Canvas;
             Canvas_Loading_Ref = Canvas_Loading;
         }
-        
-        Canvas_Loading.SetActive(false);
 
-        ChangeCanvasIfController();
+        Canvas_Ref.transform.GetChild(1).GetComponent<Button>().Select();
+
+        Canvas_Loading.SetActive(false);
+        Canvas_Loading_VR.SetActive(false);
+
+        if (Public_Vars.forced_controller_disabled)
+            ForceControllerDisabled(Public_Vars.forced_controller_disabled);
+        else
+            ChangeCanvasIfController(true);
 
         timer_check_input = 0.0f;
         timer_change_camera = 0.0f;
@@ -100,7 +102,7 @@ public class ScriptGUIController : MonoBehaviour {
 	void Update () {
         if (!loading_scene)
         {
-            if (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled)
+            /*if (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled)
             {
                 if (Input.GetKeyDown(KeyCode.Joystick1Button0))
                     StartGame();
@@ -113,7 +115,7 @@ public class ScriptGUIController : MonoBehaviour {
                         ForceVRDisabled(false);
                 if ((!XRDevice.isPresent || Public_Vars.forced_VR_disabled) && Input.GetKeyDown(KeyCode.Joystick1Button3))//Y
                     ForceControllerDisabled(true);
-            }
+            }*/
 
             timer_check_input -= Time.deltaTime;
             if (timer_check_input <= 0.0f)
@@ -121,11 +123,11 @@ public class ScriptGUIController : MonoBehaviour {
                 timer_check_input = 2.0f;
                 if (!Public_Vars.forced_controller_disabled)
                     ChangeCanvasIfController();
-
-                ChangeCameraIfVR();
+                else
+                    ChangeCameraIfVR();
             }
 
-            if (!XRDevice.isPresent || Public_Vars.forced_VR_disabled)
+            if ((!testVR && !XRDevice.isPresent) || Public_Vars.forced_VR_disabled)
             {
                 timer_change_camera -= Time.deltaTime;
                 if (timer_change_camera <= 0)
@@ -276,23 +278,60 @@ public class ScriptGUIController : MonoBehaviour {
         Application.Quit();
     }
 
-    void ChangeCanvasIfController()
+    void ChangeCanvasIfController(bool clean = false)
     {
         if (Input.GetJoystickNames().Length > 0 && Input.GetJoystickNames()[0].Length > 0)
         {
-            Public_Vars.is_controller_enabled = true;
-            //Debug.Log("controller enabled");
+            if (!Public_Vars.is_controller_enabled || clean)
+            {
+                Public_Vars.is_controller_enabled = true;
+                //Debug.Log("controller connected");
 
-            Canvas_PC.SetActive(false);
-            Canvas_Controller.SetActive(true);
+                EventSystem.current.sendNavigationEvents = true;
+                Canvas_Ref.transform.GetChild(1).GetComponent<Button>().Select();
+
+                SetButtonActive(Canvas_Ref.transform.Find("Button_Enable_Controller").gameObject, false);
+                SetButtonActive(Canvas_Ref.transform.Find("Button_Disable_Controller").gameObject, true);
+            }
         }
         else
         {
-            Public_Vars.is_controller_enabled = false;
-            //Debug.Log("controller not enabled");
+            if (Public_Vars.is_controller_enabled || clean)
+            {
+                Public_Vars.is_controller_enabled = false;
+                //Debug.Log("controller not connected");
 
-            Canvas_PC.SetActive(true);
-            Canvas_Controller.SetActive(false);
+                EventSystem.current.sendNavigationEvents = false;
+
+                SetButtonActive(Canvas_Ref.transform.Find("Button_Enable_Controller").gameObject, false);
+                SetButtonActive(Canvas_Ref.transform.Find("Button_Disable_Controller").gameObject, false);
+            }
+        }
+
+        ChangeCameraIfVR();
+    }
+
+    void ChangeCameraIfVR()
+    {
+        if ((testVR || XRDevice.isPresent) && !Public_Vars.forced_VR_disabled)
+        {
+            //Debug.Log("VR enabled");
+
+            Canvases.transform.localRotation = Quaternion.identity;
+
+            SetButtonActive(Canvas_Ref.transform.Find("Button_Enable_VR").gameObject, false);
+            SetButtonActive(Canvas_Ref.transform.Find("Button_Disable_VR").gameObject, true);
+
+            SetButtonActive(Canvas_Ref.transform.Find("Button_Disable_Controller").gameObject, false);//don't disable controller while VR enabled
+        }
+        else
+        {
+            //Debug.Log("VR not enabled");
+
+            Canvases.transform.localEulerAngles = Main_Camera.transform.localEulerAngles;
+
+            SetButtonActive(Canvas_Ref.transform.Find("Button_Disable_VR").gameObject, false);
+            SetButtonActive(Canvas_Ref.transform.Find("Button_Enable_VR").gameObject, true);
         }
     }
 
@@ -302,48 +341,17 @@ public class ScriptGUIController : MonoBehaviour {
 
         if (!b)
         {
-            Canvas_PC.transform.Find("Button_Enable_Controller").gameObject.SetActive(false);
-            ChangeCanvasIfController();
+            SetButtonActive(Canvas_Ref.transform.Find("Button_Enable_Controller").gameObject, false);
+            ChangeCanvasIfController(true);
         }
         else
         {
             Public_Vars.is_controller_enabled = false;
 
-            Canvas_PC.SetActive(true);
-            Canvas_Controller.SetActive(false);
-            Canvas_PC.transform.Find("Button_Enable_Controller").gameObject.SetActive(true);
-        }
-    }
+            SetButtonActive(Canvas_Ref.transform.Find("Button_Enable_Controller").gameObject, true);
+            SetButtonActive(Canvas_Ref.transform.Find("Button_Disable_Controller").gameObject, false);
 
-    void ChangeCameraIfVR()
-    {
-        if (XRDevice.isPresent && !Public_Vars.forced_VR_disabled)
-        {
-            //Debug.Log("VR enabled");
-
-            Canvases.transform.localRotation = Quaternion.identity;
-
-            Canvas_PC.transform.Find("Button_Enable_VR").gameObject.SetActive(false);
-            Canvas_PC.transform.Find("Button_Disable_VR").gameObject.SetActive(true);
-
-            Canvas_Controller.transform.Find("Button_Enable_VR").gameObject.SetActive(false);
-            Canvas_Controller.transform.Find("Button_Disable_VR").gameObject.SetActive(true);
-
-            Canvas_Controller.transform.Find("Button_Disable_Controller").gameObject.SetActive(false);
-        }
-        else
-        {
-            //Debug.Log("VR not enabled");
-
-            Canvases.transform.localEulerAngles = Main_Camera.transform.localEulerAngles;
-
-            Canvas_PC.transform.Find("Button_Disable_VR").gameObject.SetActive(false);
-            Canvas_Controller.transform.Find("Button_Disable_VR").gameObject.SetActive(false);
-
-            Canvas_PC.transform.Find("Button_Enable_VR").gameObject.SetActive(true);
-            Canvas_Controller.transform.Find("Button_Enable_VR").gameObject.SetActive(true);
-
-            Canvas_Controller.transform.Find("Button_Disable_Controller").gameObject.SetActive(true);
+            EventSystem.current.sendNavigationEvents = false;
         }
     }
 
@@ -366,11 +374,17 @@ public class ScriptGUIController : MonoBehaviour {
             Canvases.SetActive(true);
             Canvases_VR.SetActive(false);
 
-            Canvas_PC_Ref = Canvas_PC;
-            Canvas_Controller_Ref = Canvas_Controller;
+            Canvas_Ref = Canvas;
             Canvas_Loading_Ref = Canvas_Loading;
 
-            timer_check_input = 0.0f;
+            Canvas_Ref.SetActive(true);
+
+            Canvas_Ref.transform.GetChild(1).GetComponent<Button>().Select();
+
+            if (Public_Vars.forced_controller_disabled)
+                ForceControllerDisabled(Public_Vars.forced_controller_disabled);
+            else
+                ChangeCanvasIfController(true);
         }
     }
     
@@ -390,17 +404,23 @@ public class ScriptGUIController : MonoBehaviour {
             Canvases.SetActive(false);
             Canvases_VR.SetActive(true);
 
-            Canvas_PC_Ref = Canvas_PC_VR;
-            Canvas_Controller_Ref = Canvas_Controller_VR;
+            Canvas_Ref = Canvas_VR;
             Canvas_Loading_Ref = Canvas_Loading_VR;
+
+            Canvas_Ref.SetActive(true);
+
+            Canvas_Ref.transform.GetChild(1).GetComponent<Button>().Select();
         }
         else
         {
             Main_Camera.transform.localPosition = camera_old_position;
             Main_Camera.transform.localRotation = camera_old_rotation;
         }
-
-        timer_check_input = 0.0f;
+        
+        if (Public_Vars.forced_controller_disabled)
+            ForceControllerDisabled(Public_Vars.forced_controller_disabled);
+        else
+            ChangeCanvasIfController(true);
     }
 
     public void StartGame()
@@ -408,10 +428,9 @@ public class ScriptGUIController : MonoBehaviour {
         Debug.Log("Game Started");
         loading_scene = true;
 
-        Canvas_PC.SetActive(false);
-        Canvas_Controller.SetActive(false);
+        Canvas_Ref.SetActive(false);
 
-        Canvas_Loading.SetActive(true);
+        Canvas_Loading_Ref.SetActive(true);
 
         StartCoroutine("Loading");
     }
@@ -420,5 +439,11 @@ public class ScriptGUIController : MonoBehaviour {
     {
         SceneManager.LoadScene("Main_Scene");
         yield return true;
+    }
+    
+    private void SetButtonActive(GameObject Button, bool active)
+    {
+        Button.SetActive(active);
+        Button.GetComponent<Button>().interactable = active;
     }
 }

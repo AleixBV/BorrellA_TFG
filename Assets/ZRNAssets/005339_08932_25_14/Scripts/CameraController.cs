@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour {
 	[SerializeField]
 	GameObject[] targetCameraPoints;
 	public List<string> targetCameraNames = new List<string>();
-	private int activeCameraNum;
+	private int activeCameraNum = 0;
 
 	const float speedMoveStreet = 1.0f;
 	const float speedRotateRotary =  5.0f;

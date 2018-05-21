@@ -42,8 +42,8 @@ public class MSSceneController : MonoBehaviour {
     [Space(15)]
     #region defineInputs
     [Tooltip("Vertical input recognized by the system")]
-	public string _verticalInput = "Vertical";
     public string _triggers = "Triggers";
+	public string _verticalInput = "Vertical";
 
     [Tooltip("Horizontal input recognized by the system")]
 	public string _horizontalInput = "Horizontal";
@@ -180,7 +180,7 @@ public class MSSceneController : MonoBehaviour {
 	void Update () {
 		if (!error) {
             #region customizeInputsValues
-            if (Public_Vars.is_controller_enabled)
+            if (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled)
             {
                 verticalInput = Input.GetAxis(_triggers);
                 horizontalInput = Input.GetAxis(_horizontalInput);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Public_Vars : MonoBehaviour {
 
-    public static bool is_controller_enabled;
+    public static bool is_controller_enabled = false;
     public static bool forced_controller_disabled = false;
     public static bool forced_VR_disabled = false;
     public static bool game_paused = false;
