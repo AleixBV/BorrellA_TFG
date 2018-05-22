@@ -32,6 +32,9 @@ public class GPS_Path : MonoBehaviour {
     void SetPath()
     {
         agent.isStopped = true;
+        if (agent.hasPath)
+            agent.ResetPath();
+
         agent.SetDestination(destination.position);
         //Debug.Log("recalcule path gps");
 

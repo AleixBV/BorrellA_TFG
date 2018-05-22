@@ -84,8 +84,6 @@ public class ScriptGUIController : MonoBehaviour {
             Canvas_Loading_Ref = Canvas_Loading;
         }
 
-        Canvas_Ref.transform.GetChild(1).GetComponent<Button>().Select();
-
         Canvas_Loading.SetActive(false);
         Canvas_Loading_VR.SetActive(false);
 
@@ -379,8 +377,6 @@ public class ScriptGUIController : MonoBehaviour {
 
             Canvas_Ref.SetActive(true);
 
-            Canvas_Ref.transform.GetChild(1).GetComponent<Button>().Select();
-
             if (Public_Vars.forced_controller_disabled)
                 ForceControllerDisabled(Public_Vars.forced_controller_disabled);
             else
@@ -408,8 +404,6 @@ public class ScriptGUIController : MonoBehaviour {
             Canvas_Loading_Ref = Canvas_Loading_VR;
 
             Canvas_Ref.SetActive(true);
-
-            Canvas_Ref.transform.GetChild(1).GetComponent<Button>().Select();
         }
         else
         {

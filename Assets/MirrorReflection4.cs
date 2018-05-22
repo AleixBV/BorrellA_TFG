@@ -26,7 +26,10 @@ public class MirrorReflection4 : MonoBehaviour
 
     private void Update()
     {
-        m_TextureSize = Screen.currentResolution.width;
+        if (XRDevice.isPresent && !Public_Vars.forced_VR_disabled)
+            m_TextureSize = XRSettings.eyeTextureWidth * 2;
+        else
+            m_TextureSize = Screen.width;
     }
 
     // This is called when it's known that the object will be rendered by some

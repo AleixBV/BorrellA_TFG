@@ -272,9 +272,12 @@ public class ScriptGUIController_Main : MonoBehaviour {
 
             Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.cullingMask = 1 << 5; //UI Layer
 
-            EventSystem.current.sendNavigationEvents = true;
-            Canvas.transform.GetChild(1).GetComponent<Button>().Select();
-            Canvas.transform.GetChild(1).GetComponent<Button>().OnSelect(null);//make sure to highlight the button
+            if (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled)
+            {
+                EventSystem.current.sendNavigationEvents = true;
+                Canvas.transform.GetChild(1).GetComponent<Button>().Select();
+                Canvas.transform.GetChild(1).GetComponent<Button>().OnSelect(null);//make sure to highlight the button
+            }
         }
         else
         {
