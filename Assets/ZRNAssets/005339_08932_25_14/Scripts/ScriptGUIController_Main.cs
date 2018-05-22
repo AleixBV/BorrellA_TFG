@@ -22,8 +22,9 @@ public class ScriptGUIController_Main : MonoBehaviour {
     [SerializeField] private GameObject Canvas;
     [SerializeField] private GameObject Canvas_Loading;
     [SerializeField] private GameObject Canvases;
+    [SerializeField] private Dropdown DropDownAccelerationType;
 
-    [SerializeField] private GameObject Player_Vehicle;
+    [SerializeField] private MSVehicleController Player_Vehicle;
 
     private float timer_check_input;
 
@@ -50,6 +51,7 @@ public class ScriptGUIController_Main : MonoBehaviour {
         shadowOn = true;
 
         Canvas_Loading.SetActive(false);
+        DropDownAccelerationType.value = Public_Vars.instant_acceleration == true ? 1 : 0;
 
         if (Public_Vars.forced_controller_disabled)
             ForceControllerDisabled(Public_Vars.forced_controller_disabled);
@@ -58,9 +60,9 @@ public class ScriptGUIController_Main : MonoBehaviour {
 
         timer_check_input = 2.0f;
 
-        camera_init_position = Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.localPosition;
-        camera_init_rotation = Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.localRotation;
-        camera_init_cullingmask = Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.cullingMask;
+        camera_init_position = Player_Vehicle._cameras.cameras[0]._camera.transform.localPosition;
+        camera_init_rotation = Player_Vehicle._cameras.cameras[0]._camera.transform.localRotation;
+        camera_init_cullingmask = Player_Vehicle._cameras.cameras[0]._camera.cullingMask;
 
         respawn_texture = new Texture2D(1, 1);
         respawn_texture.SetPixel(1, 1, respawn_color);
@@ -182,20 +184,20 @@ public class ScriptGUIController_Main : MonoBehaviour {
 
             SetButtonActive(Canvas.transform.Find("Button_Disable_Controller").gameObject, false);
 
-            Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0].rotationType = CameraTypeClass.TipoRotac.VR_Nothing;
+            Player_Vehicle._cameras.cameras[0].rotationType = CameraTypeClass.TipoRotac.VR_Nothing;
         }
         else
         {
             //Debug.Log("VR not enabled");
 
-            Canvases.transform.localEulerAngles = Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.localEulerAngles;
+            Canvases.transform.localEulerAngles = Player_Vehicle._cameras.cameras[0]._camera.transform.localEulerAngles;
 
             CameraContainer.transform.localPosition = Vector3.zero;
 
             SetButtonActive(Canvas.transform.Find("Button_Disable_VR").gameObject, false);
             SetButtonActive(Canvas.transform.Find("Button_Enable_VR").gameObject, true);
 
-            Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0].rotationType = CameraTypeClass.TipoRotac.ETS_StyleCamera;
+            Player_Vehicle._cameras.cameras[0].rotationType = CameraTypeClass.TipoRotac.ETS_StyleCamera;
         }
     }
 
@@ -230,11 +232,11 @@ public class ScriptGUIController_Main : MonoBehaviour {
         }
         else
         {
-            Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0].rotationType = CameraTypeClass.TipoRotac.ETS_StyleCamera;
+            Player_Vehicle._cameras.cameras[0].rotationType = CameraTypeClass.TipoRotac.ETS_StyleCamera;
             
-            Canvases.transform.localEulerAngles = Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.localEulerAngles;
+            Canvases.transform.localEulerAngles = Player_Vehicle._cameras.cameras[0]._camera.transform.localEulerAngles;
 
-            Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.localPosition = camera_init_position;
+            Player_Vehicle._cameras.cameras[0]._camera.transform.localPosition = camera_init_position;
 
             XRSettings.LoadDeviceByName("");
             XRSettings.enabled = !b;
@@ -270,7 +272,7 @@ public class ScriptGUIController_Main : MonoBehaviour {
             //AudioListener.volume = 0;
             Time.timeScale = 0;
 
-            Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.cullingMask = 1 << 5; //UI Layer
+            Player_Vehicle._cameras.cameras[0]._camera.cullingMask = 1 << 5; //UI Layer
 
             if (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled)
             {
@@ -284,13 +286,13 @@ public class ScriptGUIController_Main : MonoBehaviour {
             AudioListener.pause = false;
             Time.timeScale = 1;
 
-            Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.cullingMask = camera_init_cullingmask; //Initial Layer
+            Player_Vehicle._cameras.cameras[0]._camera.cullingMask = camera_init_cullingmask; //Initial Layer
         }
 
         if (XRDevice.isPresent && !Public_Vars.forced_VR_disabled)
             Canvases.transform.localRotation = Quaternion.identity;
         else
-            Canvases.transform.localEulerAngles = Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.localEulerAngles;
+            Canvases.transform.localEulerAngles = Player_Vehicle._cameras.cameras[0]._camera.transform.localEulerAngles;
     }
 
     IEnumerator Loading()
@@ -302,21 +304,21 @@ public class ScriptGUIController_Main : MonoBehaviour {
 
     IEnumerator LoadDevice(string str)
     {
-        Vector3 camera_old_position = Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.localPosition;
-        Quaternion camera_old_rotation = Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.localRotation;
+        Vector3 camera_old_position = Player_Vehicle._cameras.cameras[0]._camera.transform.localPosition;
+        Quaternion camera_old_rotation = Player_Vehicle._cameras.cameras[0]._camera.transform.localRotation;
 
         XRSettings.LoadDeviceByName(str);
         yield return null;
         if (XRSettings.loadedDeviceName == str)
         {
             XRSettings.enabled = true;
-            Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.localPosition = camera_init_position;
-            Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.localRotation = camera_init_rotation;
+            Player_Vehicle._cameras.cameras[0]._camera.transform.localPosition = camera_init_position;
+            Player_Vehicle._cameras.cameras[0]._camera.transform.localRotation = camera_init_rotation;
         }
         else
         {
-            Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.localPosition = camera_old_position;
-            Player_Vehicle.GetComponent<MSVehicleController>()._cameras.cameras[0]._camera.transform.localRotation = camera_old_rotation;
+            Player_Vehicle._cameras.cameras[0]._camera.transform.localPosition = camera_old_position;
+            Player_Vehicle._cameras.cameras[0]._camera.transform.localRotation = camera_old_rotation;
         }
 
         if (Public_Vars.forced_controller_disabled)
@@ -355,5 +357,13 @@ public class ScriptGUIController_Main : MonoBehaviour {
     {
         Button.SetActive(active);
         Button.GetComponent<Button>().interactable = active;
+    }
+
+    public void ChangeAccelerationType(int instant_acceleration)
+    {
+        bool ret = instant_acceleration >= 1 ? true : false;
+        Public_Vars.instant_acceleration = ret;
+
+        Player_Vehicle.ChangeAccelerationType(ret);
     }
 }

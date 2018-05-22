@@ -8,6 +8,7 @@ public class Public_Vars : MonoBehaviour {
     public static bool forced_controller_disabled = false;
     public static bool forced_VR_disabled = false;
     public static bool game_paused = false;
+    public static bool instant_acceleration = false;
 
     public static GameObject Public_Vars_instance = null;
 

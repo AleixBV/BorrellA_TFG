@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class GPS_Path : MonoBehaviour {
 
+    [SerializeField] private Transform position;
     [SerializeField] private Transform destination;
     [SerializeField] private LineRenderer line;
     [SerializeField] private NavMeshAgent agent;
@@ -31,6 +32,8 @@ public class GPS_Path : MonoBehaviour {
 
     void SetPath()
     {
+        transform.SetPositionAndRotation(position.position, position.rotation);
+
         agent.isStopped = true;
         if (agent.hasPath)
             agent.ResetPath();

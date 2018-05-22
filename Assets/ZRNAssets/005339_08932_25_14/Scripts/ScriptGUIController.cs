@@ -16,14 +16,16 @@ public class ScriptGUIController : MonoBehaviour {
     [SerializeField] private bool testVR = false;
 
     [Header("Canvases without VR")]
-    [SerializeField] GameObject Canvases;
-    [SerializeField] GameObject Canvas;
-    [SerializeField] GameObject Canvas_Loading;
+    [SerializeField] private GameObject Canvases;
+    [SerializeField] private GameObject Canvas;
+    [SerializeField] private GameObject Canvas_Loading;
 
     [Header("Canvases with VR")]
-    [SerializeField] GameObject Canvases_VR;
-    [SerializeField] GameObject Canvas_VR;
-    [SerializeField] GameObject Canvas_Loading_VR;
+    [SerializeField] private GameObject Canvases_VR;
+    [SerializeField] private GameObject Canvas_VR;
+    [SerializeField] private GameObject Canvas_Loading_VR;
+    [SerializeField] private Dropdown DropDownAccelerationType;
+    [SerializeField] private Dropdown DropDownAccelerationTypeVR;
 
     private GameObject Canvas_Ref;
     private GameObject Canvas_Loading_Ref;
@@ -61,7 +63,9 @@ public class ScriptGUIController : MonoBehaviour {
 
         loading_scene = false;
 
-		GetComponent<CameraController>().ChangeCamera(101);
+        DropDownAccelerationType.value = Public_Vars.instant_acceleration == true ? 1 : 0;
+        DropDownAccelerationTypeVR.value = Public_Vars.instant_acceleration == true ? 1 : 0;
+        GetComponent<CameraController>().ChangeCamera(101);
 		operateCameraNumber = 101;
 
 		GetComponent<AmbientController>().changeShadow(true);
@@ -439,5 +443,14 @@ public class ScriptGUIController : MonoBehaviour {
     {
         Button.SetActive(active);
         Button.GetComponent<Button>().interactable = active;
+    }
+
+    public void ChangeAccelerationType(int instant_acceleration)
+    {
+        bool ret = instant_acceleration >= 1 ? true : false;
+        Public_Vars.instant_acceleration = ret;
+
+        DropDownAccelerationType.value = instant_acceleration;
+        DropDownAccelerationTypeVR.value = instant_acceleration;
     }
 }

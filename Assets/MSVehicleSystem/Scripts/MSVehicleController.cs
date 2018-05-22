@@ -208,7 +208,12 @@ public class MSVehicleController : MonoBehaviour {
     float mouseYInput = 0;
     float mouseScrollWheelInput = 0;
 
-    float InitialDrag = 0.2f;
+    float initialDrag = 0.2f;
+    float initialAngularDrag = 0.1f;
+    float initialEngineTorque = 4;
+    float initialGearSpeed = 2;
+    float initialBrakeForce = 4;
+    bool instant_acceleration = false;
 
     bool changinGears;
     bool changinGearsAuto;
@@ -507,13 +512,25 @@ public class MSVehicleController : MonoBehaviour {
         ms_Rigidbody = GetComponent<Rigidbody>();
         ms_Rigidbody.useGravity = true;
         ms_Rigidbody.mass = _vehicleSettings.vehicleMass;
-        InitialDrag = ms_Rigidbody.drag;
+
+        initialDrag = ms_Rigidbody.drag;
+        initialAngularDrag = ms_Rigidbody.angularDrag;
+        initialEngineTorque = _vehicleTorque.engineTorque;
+        initialGearSpeed = _vehicleTorque.speedOfGear;
+        initialBrakeForce = _vehicleSettings.brakeForce;
+
+        if (Public_Vars.instant_acceleration)
+        {
+            ChangeAccelerationType(Public_Vars.instant_acceleration);
+        }
+
         //ms_Rigidbody.drag = 0.0f;
         //ms_Rigidbody.angularDrag = 0.05f;
+
         ms_Rigidbody.maxAngularVelocity = 14.0f;
         ms_Rigidbody.maxDepenetrationVelocity = 8.0f;
         additionalCurrentGravity = 4.0f * ms_Rigidbody.mass;
-        ms_Rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+        ms_Rigidbody.interpolation = RigidbodyInterpolation.Extrapolate;// Interpolate;
         ms_Rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
         WheelCollider WheelColliders = GetComponentInChildren<WheelCollider>();
@@ -1847,4 +1864,26 @@ public class MSVehicleController : MonoBehaviour {
 		texture.Apply();
 		return texture;
 	}
+
+    public void ChangeAccelerationType(bool instant_acceleration)
+    {
+        if (instant_acceleration)
+        {
+            ms_Rigidbody.drag = 0.0f;
+            ms_Rigidbody.angularDrag = 0.0f;
+
+            _vehicleTorque.engineTorque = 32.0f;
+            _vehicleTorque.speedOfGear = 0.5f;
+            _vehicleSettings.brakeForce = 0.75f;
+        }
+        else
+        {
+            ms_Rigidbody.drag = initialDrag;
+            ms_Rigidbody.angularDrag = initialAngularDrag;
+
+            _vehicleTorque.engineTorque = initialEngineTorque;
+            _vehicleSettings.brakeForce = initialBrakeForce;
+            _vehicleTorque.speedOfGear = initialGearSpeed;
+        }
+    }
 }
