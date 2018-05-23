@@ -107,15 +107,11 @@ public class ScriptGUIController_Main : MonoBehaviour {
             }
             else
             {
-                if (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled)
-                {
-                    if (Input.GetKeyDown(KeyCode.Joystick1Button7))//Start
-                        ChangeCanvasVisibility();
-                }
-                if (Input.GetKeyDown(KeyCode.Escape))
+                if (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled && Input.GetKeyDown(KeyCode.Joystick1Button7) ||//Start
+                    Input.GetKeyDown(KeyCode.Escape))
                     ChangeCanvasVisibility();
-
-                timer_check_input = 0.0f;
+                else
+                    ChangeIfController();
             }
         }
     }
@@ -168,6 +164,26 @@ public class ScriptGUIController_Main : MonoBehaviour {
         ChangeCameraIfVR();
     }
 
+    void ChangeIfController()
+    {
+        if (Input.GetJoystickNames().Length > 0 && Input.GetJoystickNames()[0].Length > 0)
+        {
+            if (!Public_Vars.is_controller_enabled)
+            {
+                Public_Vars.is_controller_enabled = true;
+                //Debug.Log("controller connected");
+            }
+        }
+        else
+        {
+            if (Public_Vars.is_controller_enabled)
+            {
+                Public_Vars.is_controller_enabled = false;
+                //Debug.Log("controller not connected");
+            }
+        }
+    }
+
     void ChangeCameraIfVR()
     {
         if (XRDevice.isPresent && !Public_Vars.forced_VR_disabled)
@@ -218,6 +234,7 @@ public class ScriptGUIController_Main : MonoBehaviour {
             SetButtonActive(Canvas.transform.Find("Button_Disable_Controller").gameObject, false);
 
             EventSystem.current.sendNavigationEvents = false;
+            ChangeCameraIfVR();
         }
     }
 
@@ -273,13 +290,12 @@ public class ScriptGUIController_Main : MonoBehaviour {
             Time.timeScale = 0;
 
             Player_Vehicle._cameras.cameras[0]._camera.cullingMask = 1 << 5; //UI Layer
-
-            if (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled)
-            {
-                EventSystem.current.sendNavigationEvents = true;
-                Canvas.transform.GetChild(1).GetComponent<Button>().Select();
-                Canvas.transform.GetChild(1).GetComponent<Button>().OnSelect(null);//make sure to highlight the button
-            }
+            
+            timer_check_input = 2.0f;
+            if (Public_Vars.forced_controller_disabled)
+                ForceControllerDisabled(Public_Vars.forced_controller_disabled);
+            else
+                ChangeCanvasIfController(true);
         }
         else
         {
