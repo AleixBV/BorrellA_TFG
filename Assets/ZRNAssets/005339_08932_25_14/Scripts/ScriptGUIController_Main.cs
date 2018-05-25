@@ -9,7 +9,6 @@ public class ScriptGUIController_Main : MonoBehaviour {
 
 	private float hSliderValue = 0.0f;
 	private bool menuVisible = false;
-	private bool shadowOn;
 
     [SerializeField] private bool testGUI = false;
 
@@ -46,9 +45,8 @@ public class ScriptGUIController_Main : MonoBehaviour {
     {
         loading_scene = false;
         Public_Vars.game_paused = false;
-
+        
         //GetComponent<AmbientController>().changeShadow(true);
-        shadowOn = true;
 
         Canvas_Loading.SetActive(false);
         DropDownAccelerationType.value = Public_Vars.instant_acceleration == true ? 1 : 0;
@@ -77,17 +75,6 @@ public class ScriptGUIController_Main : MonoBehaviour {
             {
                 if (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled)
                 {
-                    /*if (Input.GetKeyDown(KeyCode.Joystick1Button0))//A
-                        ResumeMainGame();
-                    if (Input.GetKeyDown(KeyCode.Joystick1Button1))//B
-                        QuitMainGame();
-                    if (Input.GetKeyDown(KeyCode.Joystick1Button2))//X
-                        if (XRDevice.isPresent && !Public_Vars.forced_VR_disabled)
-                            ForceVRDisabled(true);
-                        else
-                            ForceVRDisabled(false);
-                    if ((!XRDevice.isPresent || Public_Vars.forced_VR_disabled) && Input.GetKeyDown(KeyCode.Joystick1Button3))//Y
-                        ForceControllerDisabled(true);*/
                     if (Input.GetKeyDown(KeyCode.Joystick1Button7))//Start
                         ChangeCanvasVisibility();
                 }

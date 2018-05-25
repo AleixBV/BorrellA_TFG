@@ -104,20 +104,6 @@ public class ScriptGUIController : MonoBehaviour {
 	void Update () {
         if (!loading_scene)
         {
-            /*if (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled)
-            {
-                if (Input.GetKeyDown(KeyCode.Joystick1Button0))
-                    StartGame();
-                if (Input.GetKeyDown(KeyCode.Joystick1Button1))
-                    QuitGame();
-                if (Input.GetKeyDown(KeyCode.Joystick1Button2))
-                    if (XRDevice.isPresent && !Public_Vars.forced_VR_disabled)
-                        ForceVRDisabled(true);
-                    else
-                        ForceVRDisabled(false);
-                if ((!XRDevice.isPresent || Public_Vars.forced_VR_disabled) && Input.GetKeyDown(KeyCode.Joystick1Button3))//Y
-                    ForceControllerDisabled(true);
-            }*/
 
             timer_check_input -= Time.deltaTime;
             if (timer_check_input <= 0.0f)

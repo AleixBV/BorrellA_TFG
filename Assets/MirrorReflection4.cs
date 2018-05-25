@@ -10,6 +10,9 @@ public class MirrorReflection4 : MonoBehaviour
 {
     public bool get_parent_position_and_rotation = false;
 
+    private bool old_fog;
+    [SerializeField] private bool fog = true;
+
     [Space(15)]
     public bool m_DisablePixelLights = true;
     private int m_TextureSize = 1920;
@@ -32,6 +35,17 @@ public class MirrorReflection4 : MonoBehaviour
             m_TextureSize = Screen.width;
     }
 
+    private void OnPreRender()
+    {
+        old_fog = RenderSettings.fog;
+        RenderSettings.fog = fog;
+    }
+
+    private void OnPostRender()
+    {
+        RenderSettings.fog = old_fog;
+    }
+
     // This is called when it's known that the object will be rendered by some
     // camera. We render reflections and do other updates here.
     // Because the script executes in edit mode, reflections for the scene view
@@ -50,6 +64,9 @@ public class MirrorReflection4 : MonoBehaviour
         if (s_InsideRendering)
             return;
         s_InsideRendering = true;
+
+        old_fog = RenderSettings.fog;
+        RenderSettings.fog = fog;
 
         Camera reflectionCamera;
         CreateMirrorObjects(cam, out reflectionCamera);
@@ -114,6 +131,8 @@ public class MirrorReflection4 : MonoBehaviour
             QualitySettings.pixelLightCount = oldPixelLightCount;
 
         s_InsideRendering = false;
+
+        RenderSettings.fog = old_fog;
     }
 
 
