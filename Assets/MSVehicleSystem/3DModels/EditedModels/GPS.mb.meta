@@ -7,16 +7,26 @@ ModelImporter:
   fileIDToRecycleName:
     100000: //RootNode
     100002: Mirall
+    100004: pPlane1
+    100006: RetrovisorE
     400000: //RootNode
     400002: Mirall
+    400004: pPlane1
+    400006: RetrovisorE
     2100000: v322
     2100002: v336
+    2100004: lambert1
     2300000: //RootNode
     2300002: Mirall
+    2300004: pPlane1
+    2300006: RetrovisorE
     3300000: //RootNode
     3300002: Mirall
+    3300004: pPlane1
+    3300006: RetrovisorE
     4300000: RetrovisorE
     4300002: Mirall
+    4300004: pPlane1
     9500000: //RootNode
   externalObjects: {}
   materials:
