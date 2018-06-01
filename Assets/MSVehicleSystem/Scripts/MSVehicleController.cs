@@ -39,7 +39,9 @@ public class VehicleAdjustmentClass {
 	public Transform centerOfMass;
 	[Tooltip("In this variable you must associate the object that represents the steering wheel of the vehicle. The pivot of the object must already be correctly rotated to avoid problems.")]
 	public GameObject volant;
-	[HideInInspector]
+    [Tooltip("In this variable you can edit the velocity of steering.")]
+    public float steeringVelocity = 1.5f;
+    [HideInInspector]
 	public AnimationCurve angle_x_Velocity = new AnimationCurve(new Keyframe(0, 1),new Keyframe(100, 0.6f),new Keyframe(500, 0.3f));
 	[Tooltip("If this variable is true, the vehicle will start with the engine running. But this only applies if the player starts inside this vehicle.")]
 	public bool startOn = true;
@@ -797,6 +799,11 @@ public class MSVehicleController : MonoBehaviour {
         mouseYInput = controls.mouseYInput;
         mouseScrollWheelInput = controls.mouseScrollWheelInput;
 
+        if(!theEngineIsRunning)
+        {
+            horizontalInput = 0.0f;
+        }
+
         KMh = ms_Rigidbody.velocity.magnitude * 3.6f;
         //
         if (!changinGears)
@@ -1234,6 +1241,14 @@ public class MSVehicleController : MonoBehaviour {
 			}
 		}
 
+        //Controller Vibration
+        if(Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled)
+        {
+            float vibration = engineSoundAUD.volume / 2;
+
+
+        }
+
 		//SOM IMPACTO RODA
 		if (_sounds.wheelImpactSound) {
 			if (Mathf.Abs (lastRightForwardPositionY - _wheels.rightFrontWheel.wheelMesh.transform.localPosition.y) > sensImpactFR) {
@@ -1429,8 +1444,8 @@ public class MSVehicleController : MonoBehaviour {
 	}
 
 	void Volant(){
-		angle1Ref = Mathf.MoveTowards(angle1Ref, horizontalInput, 2*Time.deltaTime);
-		angle2Volant = Mathf.MoveTowards(angle2Volant, horizontalInput, 2*Time.deltaTime);
+		angle1Ref = Mathf.MoveTowards(angle1Ref, horizontalInput, _vehicleSettings.steeringVelocity * Time.deltaTime);
+		angle2Volant = Mathf.MoveTowards(angle2Volant, horizontalInput, _vehicleSettings.steeringVelocity * Time.deltaTime);
 		//
 		maxAngleVolant = 35.0f * _vehicleSettings.angle_x_Velocity.Evaluate (KMh);
 		angleRefVolant = Mathf.Clamp (angle1Ref * maxAngleVolant, -maxAngleVolant, maxAngleVolant);

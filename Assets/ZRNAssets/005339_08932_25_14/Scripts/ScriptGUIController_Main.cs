@@ -36,6 +36,7 @@ public class ScriptGUIController_Main : MonoBehaviour {
     [Header("Respawn")]
     [SerializeField] private float respawn_timer = 2.5f;
     [SerializeField] private Color respawn_color = new Color(255, 255, 255, 0);
+    [SerializeField] private Image respawn_image;
     private float respawn_alpha = 0.0f;
     private bool respawn = false;
     private Texture2D respawn_texture;
@@ -352,6 +353,7 @@ public class ScriptGUIController_Main : MonoBehaviour {
             respawn_texture.SetPixel(0, 0, respawn_color);
             respawn_texture.Apply();
 
+            respawn_image.color = respawn_color;
             GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), respawn_texture);
         }
     }
