@@ -63,6 +63,8 @@ public class ScriptGUIController : MonoBehaviour {
 
         loading_scene = false;
 
+        XInputDotNetPure.GamePad.SetVibration(XInputDotNetPure.PlayerIndex.One, 0.0f, 0.0f);
+
         DropDownAccelerationType.value = Public_Vars.instant_acceleration == true ? 1 : 0;
         DropDownAccelerationTypeVR.value = Public_Vars.instant_acceleration == true ? 1 : 0;
         GetComponent<CameraController>().ChangeCamera(101);

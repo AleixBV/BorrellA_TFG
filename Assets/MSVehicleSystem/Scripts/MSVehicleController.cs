@@ -416,6 +416,9 @@ public class MSVehicleController : MonoBehaviour {
 
     MSSceneController controls;
 
+    bool controllerCollissionVibrating = false;
+    int controllerCollissionVibratingCount = 0;
+
     void Awake() {
         DebugStartErrors();
         SetCameras();
@@ -781,9 +784,37 @@ public class MSVehicleController : MonoBehaviour {
                 if (_sounds.collisionSounds.Length > 0) {
                     beatsSoundAUD.clip = _sounds.collisionSounds[UnityEngine.Random.Range(0, _sounds.collisionSounds.Length)];
                     beatsSoundAUD.PlayOneShot(beatsSoundAUD.clip);
+                    
+                    StartCoroutine(CollisionVibrate());
                 }
             }
         }
+    }
+
+    private IEnumerator CollisionVibrate()
+    {
+        if (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled && !Public_Vars.game_paused)
+        {
+            if (controllerCollissionVibrating)
+                controllerCollissionVibratingCount++;
+
+            controllerCollissionVibrating = true;
+        }
+        else
+        {
+            controllerCollissionVibrating = false;
+            yield break;
+        }
+
+        yield return new WaitForSeconds(0.35f);
+
+        if (controllerCollissionVibratingCount > 0)
+        {
+            controllerCollissionVibratingCount--;
+            yield break;
+        }
+
+        controllerCollissionVibrating = false;
     }
 
     void Update()
@@ -917,6 +948,22 @@ public class MSVehicleController : MonoBehaviour {
                 ms_Rigidbody.AddForce(-transform.forward * absSpeedFactor * ms_Rigidbody.mass * _vehicleSettings.brakeForce * absBrakeInput);
             }
         }
+
+        
+        //Controller Vibration
+        if (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled && !Public_Vars.game_paused)
+        {
+            if (!controllerCollissionVibrating)
+            {
+                float vibration = engineSoundAUD.volume / 3;
+
+                XInputDotNetPure.GamePad.SetVibration(XInputDotNetPure.PlayerIndex.One, vibration, vibration);
+            }
+            else
+                XInputDotNetPure.GamePad.SetVibration(XInputDotNetPure.PlayerIndex.One, 1.0f, 1.0f);
+        }
+        else
+            XInputDotNetPure.GamePad.SetVibration(XInputDotNetPure.PlayerIndex.One, 0.0f, 0.0f);
     }
 
 	void LateUpdate(){
@@ -1241,16 +1288,8 @@ public class MSVehicleController : MonoBehaviour {
 			}
 		}
 
-        //Controller Vibration
-        if(Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled)
-        {
-            float vibration = engineSoundAUD.volume / 2;
-
-
-        }
-
-		//SOM IMPACTO RODA
-		if (_sounds.wheelImpactSound) {
+        //SOM IMPACTO RODA
+        if (_sounds.wheelImpactSound) {
 			if (Mathf.Abs (lastRightForwardPositionY - _wheels.rightFrontWheel.wheelMesh.transform.localPosition.y) > sensImpactFR) {
 				beatsOnWheelSoundAUD.PlayOneShot (beatsOnWheelSoundAUD.clip);
 			}
@@ -1900,5 +1939,10 @@ public class MSVehicleController : MonoBehaviour {
             _vehicleSettings.brakeForce = initialBrakeForce;
             _vehicleTorque.speedOfGear = initialGearSpeed;
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+        XInputDotNetPure.GamePad.SetVibration(XInputDotNetPure.PlayerIndex.One, 0.0f, 0.0f);
     }
 }
