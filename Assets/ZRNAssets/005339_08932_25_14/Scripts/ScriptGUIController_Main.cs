@@ -33,6 +33,8 @@ public class ScriptGUIController_Main : MonoBehaviour {
     private Quaternion camera_init_rotation;
     private int camera_init_cullingmask;
 
+    public bool testVR = false;
+
     [Header("Respawn")]
     [SerializeField] private float respawn_timer = 2.5f;
     [SerializeField] private Color respawn_color = new Color(255, 255, 255, 0);
@@ -174,11 +176,11 @@ public class ScriptGUIController_Main : MonoBehaviour {
 
     void ChangeCameraIfVR()
     {
-        if (XRDevice.isPresent && !Public_Vars.forced_VR_disabled)
+        if (testVR || XRDevice.isPresent && !Public_Vars.forced_VR_disabled)
         {
             //Debug.Log("VR enabled");
 
-            Canvases.transform.localRotation = Quaternion.identity;
+            ChangeCanvasType(true);
 
             Vector3 tmp = new Vector3(VR_camera_Xoffset, 0.0f, VR_camera_Zoffset);
             CameraContainer.transform.localPosition = tmp;
@@ -194,7 +196,7 @@ public class ScriptGUIController_Main : MonoBehaviour {
         {
             //Debug.Log("VR not enabled");
 
-            Canvases.transform.localEulerAngles = Player_Vehicle._cameras.cameras[0]._camera.transform.localEulerAngles;
+            ChangeCanvasType(false);
 
             CameraContainer.transform.localPosition = Vector3.zero;
 
@@ -232,14 +234,14 @@ public class ScriptGUIController_Main : MonoBehaviour {
 
         if (!b)
         {
-            //Debug.Log(XRSettings.supportedDevices[0]);
-            StartCoroutine(LoadDevice(XRSettings.supportedDevices[0]));
+            //Debug.Log(XRSettings.supportedDevices[1]);
+            StartCoroutine(LoadDevice());
         }
         else
         {
             Player_Vehicle._cameras.cameras[0].rotationType = CameraTypeClass.TipoRotac.ETS_StyleCamera;
-            
-            Canvases.transform.localEulerAngles = Player_Vehicle._cameras.cameras[0]._camera.transform.localEulerAngles;
+
+            ChangeCanvasType(false);
 
             Player_Vehicle._cameras.cameras[0]._camera.transform.localPosition = camera_init_position;
 
@@ -293,10 +295,32 @@ public class ScriptGUIController_Main : MonoBehaviour {
             Player_Vehicle._cameras.cameras[0]._camera.cullingMask = camera_init_cullingmask; //Initial Layer
         }
 
-        if (XRDevice.isPresent && !Public_Vars.forced_VR_disabled)
-            Canvases.transform.localRotation = Quaternion.identity;
+        if (testVR || XRDevice.isPresent && !Public_Vars.forced_VR_disabled)
+            ChangeCanvasType(true);
         else
-            Canvases.transform.localEulerAngles = Player_Vehicle._cameras.cameras[0]._camera.transform.localEulerAngles;
+            ChangeCanvasType(false);
+    }
+
+    void ChangeCanvasType(bool VR_mode)
+    {
+        if (VR_mode)
+        {
+            Canvas.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
+            Canvas_Loading.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
+
+            Canvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0.0f, 0.0f, 300.0f);
+            Canvas.transform.localRotation = Quaternion.identity;
+            Canvas.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+            Canvas_Loading.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0.0f, 0.0f, 300.0f);
+            Canvas_Loading.GetComponent<RectTransform>().localRotation = Quaternion.identity;
+            Canvas_Loading.GetComponent<RectTransform>().localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        }
+        else
+        {
+            Canvas.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+            Canvas_Loading.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+        }
     }
 
     IEnumerator Loading()
@@ -306,14 +330,14 @@ public class ScriptGUIController_Main : MonoBehaviour {
         yield return true;
     }
 
-    IEnumerator LoadDevice(string str)
+    IEnumerator LoadDevice()
     {
         Vector3 camera_old_position = Player_Vehicle._cameras.cameras[0]._camera.transform.localPosition;
         Quaternion camera_old_rotation = Player_Vehicle._cameras.cameras[0]._camera.transform.localRotation;
 
-        XRSettings.LoadDeviceByName(str);
+        XRSettings.LoadDeviceByName(XRSettings.supportedDevices[0]);
         yield return null;
-        if (XRSettings.loadedDeviceName == str)
+        if (XRSettings.loadedDeviceName == XRSettings.supportedDevices[0])
         {
             XRSettings.enabled = true;
             Player_Vehicle._cameras.cameras[0]._camera.transform.localPosition = camera_init_position;
@@ -321,8 +345,19 @@ public class ScriptGUIController_Main : MonoBehaviour {
         }
         else
         {
-            Player_Vehicle._cameras.cameras[0]._camera.transform.localPosition = camera_old_position;
-            Player_Vehicle._cameras.cameras[0]._camera.transform.localRotation = camera_old_rotation;
+            XRSettings.LoadDeviceByName(XRSettings.supportedDevices[1]);
+            yield return null;
+            if (XRSettings.loadedDeviceName == XRSettings.supportedDevices[1])
+            {
+                XRSettings.enabled = true;
+                Player_Vehicle._cameras.cameras[0]._camera.transform.localPosition = camera_init_position;
+                Player_Vehicle._cameras.cameras[0]._camera.transform.localRotation = camera_init_rotation;
+            }
+            else
+            {
+                Player_Vehicle._cameras.cameras[0]._camera.transform.localPosition = camera_old_position;
+                Player_Vehicle._cameras.cameras[0]._camera.transform.localRotation = camera_old_rotation;
+            }
         }
 
         if (Public_Vars.forced_controller_disabled)
