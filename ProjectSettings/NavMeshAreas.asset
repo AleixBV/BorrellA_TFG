@@ -14,7 +14,7 @@ NavMeshProjectSettings:
   - name: sidewalk
     cost: 5
   - name: sidewalk_ground
-    cost: 10
+    cost: 1.1
   - name: 
     cost: 1
   - name: 

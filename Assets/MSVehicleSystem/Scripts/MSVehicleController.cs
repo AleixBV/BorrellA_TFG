@@ -789,6 +789,12 @@ public class MSVehicleController : MonoBehaviour {
                 }
             }
         }
+
+        if(collision.gameObject.tag == "AICarsCollider")
+        {
+            //TODO
+            Debug.Log("BEEP");
+        }
     }
 
     private IEnumerator CollisionVibrate()
@@ -1944,5 +1950,10 @@ public class MSVehicleController : MonoBehaviour {
     private void OnApplicationQuit()
     {
         XInputDotNetPure.GamePad.SetVibration(XInputDotNetPure.PlayerIndex.One, 0.0f, 0.0f);
+    }
+
+    public float GetVelocity()
+    {
+        return ms_Rigidbody.velocity.magnitude / 2;
     }
 }

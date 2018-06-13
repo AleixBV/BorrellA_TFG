@@ -10,7 +10,8 @@ public class AI_Car : MonoBehaviour {
     [SerializeField] AI_Spawn_Container spawnContainer;
 
     UnityEngine.AI.NavMeshAgent navMeshAgentComponent;
-    [SerializeField] private float CAR_SPEED = 10.0f;
+    [SerializeField] private float CAR_MAX_SPEED = 10.0f;
+    private float max_speed;
 
     private bool nextDestinationIsStop = false;
     private float destinationRadius;
@@ -21,6 +22,8 @@ public class AI_Car : MonoBehaviour {
     void Start()
     {
         navMeshAgentComponent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+
+        max_speed = CAR_MAX_SPEED;
 
         destinationRadius = navMeshDest.GetRadius();
     }
@@ -45,7 +48,7 @@ public class AI_Car : MonoBehaviour {
         }
 
         yield return new WaitForSeconds(0.5f);
-        navMeshAgentComponent.speed = CAR_SPEED;
+        navMeshAgentComponent.speed = max_speed;
         targetAICar.GetComponent<Animation>().Play("01_Run");
 
     }
@@ -126,5 +129,42 @@ public class AI_Car : MonoBehaviour {
     {
         yield return new WaitForSeconds(delay);
         navMeshAgentComponent.autoBraking = true;
+    }
+
+    public UnityEngine.AI.NavMeshAgent GetAgent()
+    {
+        return navMeshAgentComponent;
+    }
+
+    public void SetMaxSpeed(float new_max_speed)
+    {
+        max_speed = new_max_speed;
+
+        if (navMeshAgentComponent.speed > 0.0f)
+        {
+            navMeshAgentComponent.speed = new_max_speed;
+            if (new_max_speed < 0.1f)
+                stopCar();
+        }
+    }
+
+    public void ResetMaxSpeed()
+    {
+        max_speed = CAR_MAX_SPEED;
+
+        if (navMeshAgentComponent.speed > 0.0f)
+            navMeshAgentComponent.speed = max_speed;
+        else
+            StartCoroutine(startCar(0.25f));
+    }
+
+    public float GetMaxSpeed()
+    {
+        return max_speed;
+    }
+
+    public Collider GetCollider()
+    {
+        return targetAICar.GetComponent<Collider>();
     }
 }
