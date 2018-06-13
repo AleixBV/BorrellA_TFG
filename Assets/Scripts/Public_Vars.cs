@@ -12,6 +12,11 @@ public class Public_Vars : MonoBehaviour {
 
     public static GameObject Public_Vars_instance = null;
 
+    public static float traffic_light_time = 15.0f;
+    public static float traffic_light_yellow_time = 3.0f;
+    public static float stop_time = 2.0f;
+    public static float spawn_dist = 250.0f;
+
     // Use this for initialization
     void Start () {
         if (Public_Vars_instance == null)

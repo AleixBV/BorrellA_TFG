@@ -68,6 +68,8 @@ public class ScriptGUIController_Main : MonoBehaviour {
         respawn_texture = new Texture2D(1, 1);
         respawn_texture.SetPixel(1, 1, respawn_color);
         respawn_texture.Apply();
+
+        InitAICars();
     }
 	
 	// Update is called once per frame
@@ -108,11 +110,11 @@ public class ScriptGUIController_Main : MonoBehaviour {
 
 	void InitAICars () {
 
-		/*GameObject[] targetAICars = GameObject.FindGameObjectsWithTag("AICars");
+		GameObject[] targetAICars = GameObject.FindGameObjectsWithTag("AICars");
 		foreach (GameObject targetAICar in targetAICars)
 		{
-			targetAICar.GetComponent<AICarMove>().InitAICar();
-		}*/
+			targetAICar.GetComponent<AI_Car>().InitAICar();
+		}
 	}
 
     public void ResumeMainGame()
