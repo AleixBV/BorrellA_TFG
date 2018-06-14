@@ -12,9 +12,9 @@ NavMeshProjectSettings:
   - name: Jump
     cost: 25
   - name: sidewalk
-    cost: 5
+    cost: 4
   - name: sidewalk_ground
-    cost: 1.1
+    cost: 2
   - name: 
     cost: 1
   - name: 

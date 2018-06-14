@@ -19,7 +19,7 @@ public class AI_Car : MonoBehaviour {
     private bool first_start = true;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         navMeshAgentComponent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 
