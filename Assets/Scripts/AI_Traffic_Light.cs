@@ -8,6 +8,8 @@ public class AI_Traffic_Light : MonoBehaviour {
     [SerializeField] GameObject YellowLight;
     [SerializeField] GameObject RedLight;
 
+    bool cant_change = false;
+
     public enum TrafficLightColor
     {
         BLUE = 0,
@@ -17,25 +19,31 @@ public class AI_Traffic_Light : MonoBehaviour {
 
     public bool isRed = false;
 
-	public void ChangeColor(TrafficLightColor color)
+	public void ChangeColor(TrafficLightColor color, bool cinematic = false)
     {
-        BlueLight.SetActive(false);
-        YellowLight.SetActive(false);
-        RedLight.SetActive(false);
-
-        switch (color)
+        if (!cant_change)
         {
-            case TrafficLightColor.BLUE:
-                BlueLight.SetActive(true);
-                break;
-            case TrafficLightColor.YELLOW:
-                YellowLight.SetActive(true);
-                break;
-            case TrafficLightColor.RED:
-                RedLight.SetActive(true);
-                break;
-            default:
-                break;
+            BlueLight.SetActive(false);
+            YellowLight.SetActive(false);
+            RedLight.SetActive(false);
+
+            switch (color)
+            {
+                case TrafficLightColor.BLUE:
+                    BlueLight.SetActive(true);
+                    break;
+                case TrafficLightColor.YELLOW:
+                    YellowLight.SetActive(true);
+                    break;
+                case TrafficLightColor.RED:
+                    RedLight.SetActive(true);
+                    break;
+                default:
+                    break;
+            }
+
+            if (cinematic)
+                cant_change = true;
         }
     }
 }

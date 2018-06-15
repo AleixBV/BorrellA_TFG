@@ -5,21 +5,15 @@ using UnityEngine;
 public class Outside_Trigger : MonoBehaviour {
 
     [SerializeField] private ScriptGUIController_Main Gui_Cotroller;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    [SerializeField] private bool Final_Cinematic = false;
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
         {
+            if (Final_Cinematic)
+                Gui_Cotroller.SetRespawnTimer(0.35f, true);
+
             Gui_Cotroller.SetRespawn();
         }
     }

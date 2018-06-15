@@ -60,6 +60,7 @@ public class ScriptGUIController : MonoBehaviour {
         AudioListener.pause = false;
         Time.timeScale = 1;
         Public_Vars.game_paused = false;
+        Public_Vars.final_cinematic = false;
 
         loading_scene = false;
 

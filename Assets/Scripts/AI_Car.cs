@@ -13,6 +13,9 @@ public class AI_Car : MonoBehaviour {
     [SerializeField] private float CAR_MAX_SPEED = 10.0f;
     private float max_speed;
 
+    [SerializeField] AudioClip[] beepSounds;
+    AudioSource beepSoundAUD;
+
     private bool nextDestinationIsStop = false;
     private float destinationRadius;
 
@@ -26,6 +29,9 @@ public class AI_Car : MonoBehaviour {
         max_speed = CAR_MAX_SPEED;
 
         destinationRadius = navMeshDest.GetRadius();
+
+        beepSoundAUD = GetComponent<AudioSource>();
+        beepSoundAUD.clip = beepSounds[0];
     }
 
     public void InitAICar()
@@ -166,5 +172,11 @@ public class AI_Car : MonoBehaviour {
     public Collider GetCollider()
     {
         return targetAICar.GetComponent<Collider>();
+    }
+
+    public void PlayHorn()
+    {
+        if(!beepSoundAUD.isPlaying)
+            beepSoundAUD.PlayOneShot(beepSoundAUD.clip);
     }
 }

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 [Serializable]
 public class WheelClass {
@@ -419,6 +420,9 @@ public class MSVehicleController : MonoBehaviour {
     bool controllerCollissionVibrating = false;
     int controllerCollissionVibratingCount = 0;
 
+    bool collisioning = false;
+    List<GameObject> collisioningCollider = new List<GameObject>();
+
     void Awake() {
         DebugStartErrors();
         SetCameras();
@@ -788,13 +792,38 @@ public class MSVehicleController : MonoBehaviour {
                     StartCoroutine(CollisionVibrate());
                 }
             }
+            collisioning = true;
+            if (!collisioningCollider.Contains(collision.gameObject))
+                collisioningCollider.Add(collision.gameObject);
         }
 
         if(collision.gameObject.tag == "AICarsCollider")
         {
-            //TODO
-            Debug.Log("BEEP");
+            collision.transform.parent.GetComponent<AI_Car>().PlayHorn();
         }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if(collisioningCollider.Contains(collision.gameObject))
+        {
+            collisioningCollider.Remove(collision.gameObject);
+            if(collisioningCollider.Count <= 0)
+            {
+                collisioning = false;
+            }
+        }
+    }
+
+    public void PlaySoundCollision()
+    {
+        beatsSoundAUD.clip = _sounds.collisionSounds[UnityEngine.Random.Range(0, _sounds.collisionSounds.Length)];
+        beatsSoundAUD.PlayOneShot(beatsSoundAUD.clip);
+    }
+
+    public bool IsCollisioning()
+    {
+        return collisioning;
     }
 
     private IEnumerator CollisionVibrate()
@@ -853,13 +882,16 @@ public class MSVehicleController : MonoBehaviour {
         }
         if (isInsideTheCar)
         {
-            if ((!Public_Vars.is_controller_enabled || Public_Vars.forced_controller_disabled) && Input.GetKeyDown(controls.controls.handBrakeInput) && controls.controls.enable_handBrakeInput_Input && Time.timeScale > 0.2f)
+            if (!Public_Vars.final_cinematic)
             {
-                handBrakeTrue = !handBrakeTrue;
-            }
-            else if (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled && Input.GetKey(controls.controls.handBrakeInputController) && controls.controls.enable_handBrakeInput_Input && Time.timeScale > 0.2f)
-            {
-                handBrakeTrue = !handBrakeTrue;
+                if ((!Public_Vars.is_controller_enabled || Public_Vars.forced_controller_disabled) && Input.GetKeyDown(controls.controls.handBrakeInput) && controls.controls.enable_handBrakeInput_Input && Time.timeScale > 0.2f)
+                {
+                    handBrakeTrue = !handBrakeTrue;
+                }
+                else if (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled && Input.GetKeyDown(controls.controls.handBrakeInputController) && controls.controls.enable_handBrakeInput_Input && Time.timeScale > 0.2f)
+                {
+                    handBrakeTrue = !handBrakeTrue;
+                }
             }
         }
         //
@@ -979,7 +1011,10 @@ public class MSVehicleController : MonoBehaviour {
 		if (_cameras.cameras.Length > 0 && Time.timeScale > 0.2f) {
 			CamerasManager ();
 		}
-	}
+
+        if(Public_Vars.game_paused)
+            XInputDotNetPure.GamePad.SetVibration(XInputDotNetPure.PlayerIndex.One, 0.0f, 0.0f);
+    }
 
 	void DiscoverAverageRpm(){
 		groundedWheels = 0;
@@ -1391,7 +1426,7 @@ public class MSVehicleController : MonoBehaviour {
 		if (youCanCall && isInsideTheCar && controls.controls.enable_startTheVehicle_Input) {
 			if (((((!Public_Vars.is_controller_enabled || Public_Vars.forced_controller_disabled) && Input.GetKeyDown (controls.controls.startTheVehicle)) ||
                 (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled && Input.GetKeyDown(controls.controls.startTheVehicleController))) && !theEngineIsRunning)
-                || (Mathf.Abs(verticalInput) > 0.5f && !theEngineIsRunning)) {
+                || ((Mathf.Abs(verticalInput) > 0.5f || Public_Vars.final_cinematic) && !theEngineIsRunning)) {
 				enableEngineSound = true;
 				if (_sounds.engineSound) {
 					engineSoundAUD.pitch = 0.5f;
@@ -1399,7 +1434,8 @@ public class MSVehicleController : MonoBehaviour {
 				StartCoroutine ("StartEngineCoroutine", true);
 				StartCoroutine ("StartEngineTime");
 			}
-			if ((((!Public_Vars.is_controller_enabled || Public_Vars.forced_controller_disabled) && Input.GetKeyDown (controls.controls.startTheVehicle)) ||
+			if (!Public_Vars.final_cinematic &&
+                (((!Public_Vars.is_controller_enabled || Public_Vars.forced_controller_disabled) && Input.GetKeyDown (controls.controls.startTheVehicle)) ||
                 (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled && Input.GetKeyDown(controls.controls.startTheVehicleController))) 
                 && theEngineIsRunning) {
 				StartCoroutine ("StartEngineCoroutine", false);
@@ -1571,10 +1607,10 @@ public class MSVehicleController : MonoBehaviour {
 		if (currentBrakeValue > 0.1f) {
 			return 0;
 		}
-		if ((!Public_Vars.is_controller_enabled || Public_Vars.forced_controller_disabled) && Input.GetKey (controls.controls.handBrakeInput) && controls.controls.enable_handBrakeInput_Input) {
+		if (!Public_Vars.final_cinematic && (!Public_Vars.is_controller_enabled || Public_Vars.forced_controller_disabled) && Input.GetKey (controls.controls.handBrakeInput) && controls.controls.enable_handBrakeInput_Input) {
 			return 0;
         }
-        if (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled && Input.GetKey(controls.controls.handBrakeInputController) && controls.controls.enable_handBrakeInput_Input)
+        if (!Public_Vars.final_cinematic && Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled && Input.GetKey(controls.controls.handBrakeInputController) && controls.controls.enable_handBrakeInput_Input)
         {
             return 0;
         }
@@ -1674,10 +1710,10 @@ public class MSVehicleController : MonoBehaviour {
 		} else {
 			handBrake_Input = 0;
 		}
-		if ((!Public_Vars.is_controller_enabled || Public_Vars.forced_controller_disabled) && Input.GetKey (controls.controls.handBrakeInput) && controls.controls.enable_handBrakeInput_Input) {
+		if (!Public_Vars.final_cinematic && (!Public_Vars.is_controller_enabled || Public_Vars.forced_controller_disabled) && Input.GetKey (controls.controls.handBrakeInput) && controls.controls.enable_handBrakeInput_Input) {
 			handBrake_Input = 2;
 		}
-        else if (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled && Input.GetKey(controls.controls.handBrakeInputController) && controls.controls.enable_handBrakeInput_Input)
+        else if (!Public_Vars.final_cinematic && Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled && Input.GetKey(controls.controls.handBrakeInputController) && controls.controls.enable_handBrakeInput_Input)
         {
             handBrake_Input = 2;
         }

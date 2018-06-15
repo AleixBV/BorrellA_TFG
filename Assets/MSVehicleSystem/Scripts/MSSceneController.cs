@@ -87,9 +87,14 @@ public class MSSceneController : MonoBehaviour {
 	public float mouseYInput = 0;
 	[HideInInspector]
 	public float mouseScrollWheelInput = 0;
-	#endregion
+    #endregion
 
-	int currentVehicle = 0;
+    [HideInInspector]
+    public float cinematicVerticalInput = 0;
+    [HideInInspector]
+    public float cinematicHorizontalInput = 0;
+
+    int currentVehicle = 0;
 	int clampGear;
 	int proximityObjectIndex;
 	int proximityDoorIndex;
@@ -182,8 +187,17 @@ public class MSSceneController : MonoBehaviour {
             #region customizeInputsValues
             if (Public_Vars.is_controller_enabled && !Public_Vars.forced_controller_disabled)
             {
-                verticalInput = Input.GetAxis(_triggers);
-                horizontalInput = Input.GetAxis(_horizontalInput);
+                if (Public_Vars.final_cinematic)
+                {
+                    verticalInput = cinematicVerticalInput;
+                    horizontalInput = cinematicHorizontalInput;
+                }
+                else
+                {
+                    verticalInput = Input.GetAxis(_triggers);
+                    horizontalInput = Input.GetAxis(_horizontalInput);
+                }
+
                 mouseXInput = Input.GetAxis(_joystickRXInput);
                 mouseYInput = Input.GetAxis(_joystickRYInput);
                 mouseScrollWheelInput = 0.0f;
@@ -191,8 +205,17 @@ public class MSSceneController : MonoBehaviour {
             }
             else
             {
-                verticalInput = Input.GetAxis(_verticalInput);
-                horizontalInput = Input.GetAxis(_horizontalNotJInput);
+                if (Public_Vars.final_cinematic)
+                {
+                    verticalInput = cinematicVerticalInput;
+                    horizontalInput = cinematicHorizontalInput;
+                }
+                else
+                {
+                    verticalInput = Input.GetAxis(_verticalInput);
+                    horizontalInput = Input.GetAxis(_horizontalNotJInput);
+                }
+
                 mouseXInput = Input.GetAxis(_mouseXInput);
                 mouseYInput = Input.GetAxis(_mouseYInput);
                 mouseScrollWheelInput = Input.GetAxis(_mouseScrollWheelInput);

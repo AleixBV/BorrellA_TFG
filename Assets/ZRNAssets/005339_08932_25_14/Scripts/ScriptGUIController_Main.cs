@@ -48,6 +48,7 @@ public class ScriptGUIController_Main : MonoBehaviour {
     {
         loading_scene = false;
         Public_Vars.game_paused = false;
+        Public_Vars.final_cinematic = false;
         
         //GetComponent<AmbientController>().changeShadow(true);
 
@@ -407,5 +408,15 @@ public class ScriptGUIController_Main : MonoBehaviour {
         Public_Vars.instant_acceleration = ret;
 
         Player_Vehicle.ChangeAccelerationType(ret);
+    }
+
+    public void SetRespawnTimer(float timer, bool finalCinematic = false)
+    {
+        respawn_timer = timer;
+
+        if(finalCinematic)
+        {
+            Player_Vehicle.PlaySoundCollision();
+        }
     }
 }

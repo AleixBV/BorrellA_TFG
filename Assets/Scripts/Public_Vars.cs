@@ -18,6 +18,8 @@ public class Public_Vars : MonoBehaviour {
     public static float spawn_dist = 200.0f;
     public static float braking_timer = 10.0f;
 
+    public static bool final_cinematic = false;
+
     // Use this for initialization
     void Start () {
         if (Public_Vars_instance == null)

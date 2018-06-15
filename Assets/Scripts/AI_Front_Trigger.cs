@@ -90,10 +90,10 @@ public class AI_Front_Trigger : MonoBehaviour {
 
             if(braking_timer <= 0.0f)
             {
-                //TODO
-                Debug.Log("BEEP");
+                AI_Car.PlayHorn();
 
                 braking_timer = Public_Vars.braking_timer / 2;
+                StartCoroutine(EnableAvoidingObstacles());
             }
         }
     }
@@ -104,9 +104,15 @@ public class AI_Front_Trigger : MonoBehaviour {
         avoiding_obstacle = true;
         GetComponent<BoxCollider>().enabled = false;
 
+        colliding.Clear();
+        colliding_player = false;
+
+        //AI_Car.GetAgent().SetDestination(AI_Car.GetAgent().destination);
+        AI_Car.ResetMaxSpeed();
+
         Debug.Log(AI_Car.name + " avoiding enabled");
 
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(5.0f);
 
         AI_Car.GetAgent().obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;
         avoiding_obstacle = false;
