@@ -12,12 +12,14 @@ public class Final_Trigger : MonoBehaviour {
 
     [SerializeField] GameObject AI_Container;
 
+    [SerializeField] bool x_direction = false;
+
     private void OnTriggerEnter(Collider other)
     {
         if (!Public_Vars.final_cinematic && other.tag == "Player")
         {
             Public_Vars.final_cinematic = true;
-            Final_Cinematic.StartCinematic(destination);
+            Final_Cinematic.StartCinematic(destination, x_direction);
 
             AI_Container.SetActive(true);
 
