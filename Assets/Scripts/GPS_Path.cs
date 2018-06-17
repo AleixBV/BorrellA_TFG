@@ -15,7 +15,7 @@ public class GPS_Path : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        SetPath();
+        //timer_recalculate_progress = timer_recalculate;
     }
 	
 	// Update is called once per frame
@@ -32,9 +32,11 @@ public class GPS_Path : MonoBehaviour {
 
     void SetPath()
     {
-        transform.SetPositionAndRotation(position.position, position.rotation);
-
         agent.isStopped = true;
+        agent.enabled = false;
+        transform.SetPositionAndRotation(position.position, position.rotation);
+        agent.enabled = true;
+
         if (agent.hasPath)
             agent.ResetPath();
 

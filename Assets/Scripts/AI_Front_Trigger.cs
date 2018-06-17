@@ -31,9 +31,9 @@ public class AI_Front_Trigger : MonoBehaviour {
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "AICarsCollider")
+        if (!avoiding_obstacle && other.tag == "AICarsCollider")
         {
-            if (!avoiding_obstacle && other.transform.parent.GetComponentInChildren<AI_Front_Trigger>().GetColliding().Contains(AI_Collider))
+            if (other.transform.parent.GetComponentInChildren<AI_Front_Trigger>().GetColliding().Contains(AI_Collider))
             {
                 AI_Car.ResetMaxSpeed();
                 colliding.Remove(other);
@@ -102,7 +102,7 @@ public class AI_Front_Trigger : MonoBehaviour {
     {
         AI_Car.GetAgent().obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.HighQualityObstacleAvoidance;
         avoiding_obstacle = true;
-        GetComponent<BoxCollider>().enabled = false;
+        //GetComponent<BoxCollider>().enabled = false;
 
         colliding.Clear();
         colliding_player = false;
@@ -116,7 +116,7 @@ public class AI_Front_Trigger : MonoBehaviour {
 
         AI_Car.GetAgent().obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;
         avoiding_obstacle = false;
-        GetComponent<BoxCollider>().enabled = true;
+        //GetComponent<BoxCollider>().enabled = true;
     }
 
     public List<Collider> GetColliding()

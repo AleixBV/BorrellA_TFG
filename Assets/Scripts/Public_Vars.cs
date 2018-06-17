@@ -15,7 +15,7 @@ public class Public_Vars : MonoBehaviour {
     public static float traffic_light_time = 15.0f;
     public static float traffic_light_yellow_time = 3.0f;
     public static float stop_time = 2.0f;
-    public static float spawn_dist = 200.0f;
+    public static float spawn_dist = 100.0f;
     public static float braking_timer = 10.0f;
 
     public static bool final_cinematic = false;

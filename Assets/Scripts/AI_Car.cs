@@ -117,7 +117,7 @@ public class AI_Car : MonoBehaviour {
                 {
                     nextDestinationIsStop = true;
                     navMeshAgentComponent.SetDestination(nextDest.stopPlace.position);
-                    destinationRadius = 0.1f;
+                    destinationRadius = 1.0f;
                 }
                 else
                 {

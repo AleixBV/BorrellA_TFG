@@ -15,7 +15,7 @@ public class AI_Intersection : MonoBehaviour {
     [SerializeField] float radius = 0.1f;
     [SerializeField] Next_Destination[] possibleNextDestinations;
     [SerializeField] bool haveTrafficLight = false;
-    [SerializeField] AI_Traffic_Light trafficLight;
+    [SerializeField] AI_Traffic_Light[] trafficLights;
     [SerializeField] bool trafficRedLightOn = false;
 
     float trafficLightsTimer = Public_Vars.traffic_light_time;
@@ -62,7 +62,8 @@ public class AI_Intersection : MonoBehaviour {
 
     private void SetTrafficLight(AI_Traffic_Light.TrafficLightColor color)
     {
-        trafficLight.ChangeColor(color);
+        foreach(AI_Traffic_Light light in trafficLights)
+            light.ChangeColor(color);
     }
 
     private int PossibleDestinationContains(AI_Intersection contains)

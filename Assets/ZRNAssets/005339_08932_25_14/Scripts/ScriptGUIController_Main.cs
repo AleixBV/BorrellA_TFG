@@ -24,6 +24,7 @@ public class ScriptGUIController_Main : MonoBehaviour {
     [SerializeField] private Dropdown DropDownAccelerationType;
 
     [SerializeField] private MSVehicleController Player_Vehicle;
+    [SerializeField] private Transform[] Start_Positions;
 
     private float timer_check_input;
 
@@ -49,8 +50,11 @@ public class ScriptGUIController_Main : MonoBehaviour {
         loading_scene = false;
         Public_Vars.game_paused = false;
         Public_Vars.final_cinematic = false;
-        
+
         //GetComponent<AmbientController>().changeShadow(true);
+
+        int start_pos = Random.Range(0, Start_Positions.Length);
+        Player_Vehicle.transform.SetPositionAndRotation(Start_Positions[start_pos].position, Start_Positions[start_pos].rotation);
 
         Canvas_Loading.SetActive(false);
         DropDownAccelerationType.value = Public_Vars.instant_acceleration == true ? 1 : 0;
