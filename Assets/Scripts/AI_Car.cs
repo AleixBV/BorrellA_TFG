@@ -20,6 +20,7 @@ public class AI_Car : MonoBehaviour {
     private float destinationRadius;
 
     private bool first_start = true;
+    private bool _car_stoped_red = false;
 
     // Use this for initialization
     void Awake()
@@ -56,7 +57,7 @@ public class AI_Car : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         navMeshAgentComponent.speed = max_speed;
         targetAICar.GetComponent<Animation>().Play("01_Run");
-
+        _car_stoped_red = false;
     }
 
     void stopCar()
@@ -67,13 +68,14 @@ public class AI_Car : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (!navMeshAgentComponent.pathPending && navMeshAgentComponent.hasPath && navMeshAgentComponent.remainingDistance < destinationRadius)
+        if (!_car_stoped_red && !navMeshAgentComponent.pathPending && navMeshAgentComponent.hasPath && navMeshAgentComponent.remainingDistance < destinationRadius)
         {
             if (!nextDestinationIsStop && navMeshDest.name.Contains("before"))
                 StartCoroutine(EnableAutoBrake(2.0f));
 
             if (navMeshDest.GetRedLightOn())
             {
+                _car_stoped_red = true;
                 stopCar();
                 StartCoroutine(startCar(0.5f + navMeshDest.RemainingRedLightTime()));
             }
@@ -178,5 +180,30 @@ public class AI_Car : MonoBehaviour {
     {
         if(!beepSoundAUD.isPlaying)
             beepSoundAUD.PlayOneShot(beepSoundAUD.clip);
+    }
+
+    public AI_Intersection GetDestination()
+    {
+        return navMeshDest;
+    }
+
+    public void SetDestinationRadius(float radius)
+    {
+        destinationRadius = radius;
+    }
+
+    public float GetDestinationRadius()
+    {
+        return destinationRadius;
+    }
+
+    public UnityEngine.AI.NavMeshAgent GetNavMeshAgent()
+    {
+        return navMeshAgentComponent;
+    }
+
+    public bool IsCarStoppedRed()
+    {
+        return _car_stoped_red;
     }
 }

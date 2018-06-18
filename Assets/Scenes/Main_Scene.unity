@@ -479,6 +479,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 968944097}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 738254489}
 --- !u!65 &7209216
 BoxCollider:
@@ -1229,7 +1230,55 @@ Transform:
   m_Children:
   - {fileID: 1236883328}
   m_Father: {fileID: 566259532}
-  m_RootOrder: 26
+  m_RootOrder: 27
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &42905602
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 42905604}
+  - component: {fileID: 42905603}
+  m_Layer: 0
+  m_Name: GameObject (14.5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &42905603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 42905602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f4f208be42323c4d86c112949b137fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isExit: 0
+  radius: 3
+  possibleNextDestinations:
+  - nextDestination: {fileID: 1805504020}
+    stopPlace: {fileID: 0}
+  haveTrafficLight: 0
+  trafficLights: []
+  trafficRedLightOn: 0
+--- !u!4 &42905604
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 42905602}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -47.718, y: 0.226, z: -18.549}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 566259532}
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &44482689 stripped
 GameObject:
@@ -2206,7 +2255,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 53
+  m_RootOrder: 54
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &84013036
 MonoBehaviour:
@@ -2471,7 +2520,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &101918516
 MonoBehaviour:
@@ -3233,7 +3282,7 @@ Transform:
   m_Children:
   - {fileID: 636853218}
   m_Father: {fileID: 566259532}
-  m_RootOrder: 29
+  m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &132236222
 GameObject:
@@ -4165,7 +4214,7 @@ Transform:
   - {fileID: 1919321170}
   - {fileID: 2067316607}
   m_Father: {fileID: 566259532}
-  m_RootOrder: 23
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &171373802 stripped
 GameObject:
@@ -5371,7 +5420,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 34
+  m_RootOrder: 35
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &201183939
 MonoBehaviour:
@@ -6565,6 +6614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 1801853899}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 747741179}
 --- !u!65 &232727424
 BoxCollider:
@@ -6616,11 +6666,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 235191070}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -48.612, y: 0.318, z: -51.818}
+  m_LocalPosition: {x: -48.346, y: 0.318, z: -51.913}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 41
+  m_RootOrder: 42
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &235191072
 MonoBehaviour:
@@ -7209,7 +7259,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 45
+  m_RootOrder: 46
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &252182427
 MonoBehaviour:
@@ -7502,6 +7552,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 470637113}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 1004050408}
 --- !u!65 &274841191
 BoxCollider:
@@ -9118,7 +9169,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 49
+  m_RootOrder: 50
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &335023793
 MonoBehaviour:
@@ -9365,7 +9416,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 50
+  m_RootOrder: 51
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &353017607
 MonoBehaviour:
@@ -11032,7 +11083,7 @@ Transform:
   - {fileID: 1362807360}
   - {fileID: 1818758512}
   m_Father: {fileID: 566259532}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &424967418 stripped
 GameObject:
@@ -11079,7 +11130,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 31
+  m_RootOrder: 32
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &426195239
 MonoBehaviour:
@@ -11343,6 +11394,7 @@ Transform:
   - {fileID: 1312178203}
   - {fileID: 1763052347}
   - {fileID: 1687414950}
+  - {fileID: 1089933886}
   m_Father: {fileID: 1689592751}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12965,7 +13017,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 35
+  m_RootOrder: 36
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &486432314
 MonoBehaviour:
@@ -13593,6 +13645,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 617598299}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 1567815624}
 --- !u!65 &527718869
 BoxCollider:
@@ -13665,6 +13718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 185437529}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 1525491987}
 --- !u!65 &528982012
 BoxCollider:
@@ -13872,6 +13926,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 1717216218}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 816984091}
 --- !u!65 &536634327
 BoxCollider:
@@ -14578,6 +14633,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 942047301}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 80327115}
 --- !u!65 &555282867
 BoxCollider:
@@ -14896,6 +14952,7 @@ Transform:
   - {fileID: 167229087}
   - {fileID: 1919030957}
   - {fileID: 1300352262}
+  - {fileID: 42905604}
   - {fileID: 1805504019}
   - {fileID: 1071710713}
   - {fileID: 101918515}
@@ -15983,7 +16040,7 @@ Transform:
   - {fileID: 1234683998}
   - {fileID: 1500043869}
   m_Father: {fileID: 566259532}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &603795954 stripped
 GameObject:
@@ -16288,6 +16345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 1488647409}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 962953300}
 --- !u!65 &611227630
 BoxCollider:
@@ -16647,6 +16705,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 1452817868}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 2041636382}
 --- !u!65 &617384344
 BoxCollider:
@@ -17335,7 +17394,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 54
+  m_RootOrder: 55
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &646525395
 MonoBehaviour:
@@ -17458,7 +17517,7 @@ Transform:
   - {fileID: 467994215}
   - {fileID: 1074458447}
   m_Father: {fileID: 566259532}
-  m_RootOrder: 42
+  m_RootOrder: 43
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &649538246
 MonoBehaviour:
@@ -18012,7 +18071,7 @@ Transform:
   - {fileID: 763602970}
   - {fileID: 419909390}
   m_Father: {fileID: 566259532}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &663184480 stripped
 GameObject:
@@ -19546,7 +19605,7 @@ Transform:
   m_Children:
   - {fileID: 189798110}
   m_Father: {fileID: 566259532}
-  m_RootOrder: 20
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &719174017 stripped
 GameObject:
@@ -20619,7 +20678,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 47
+  m_RootOrder: 48
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &757037871
 MonoBehaviour:
@@ -21276,6 +21335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 216422457}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 520589476}
 --- !u!65 &772020502
 BoxCollider:
@@ -24469,7 +24529,7 @@ Transform:
   m_Children:
   - {fileID: 1805422714}
   m_Father: {fileID: 566259532}
-  m_RootOrder: 24
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &897674426
 MonoBehaviour:
@@ -25402,7 +25462,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 51
+  m_RootOrder: 52
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &935191358
 MonoBehaviour:
@@ -28987,7 +29047,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1071710714
 MonoBehaviour:
@@ -29034,7 +29094,7 @@ Transform:
   m_Children:
   - {fileID: 1814833981}
   m_Father: {fileID: 566259532}
-  m_RootOrder: 46
+  m_RootOrder: 47
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1072880994
 MonoBehaviour:
@@ -29052,8 +29112,8 @@ MonoBehaviour:
   possibleNextDestinations:
   - nextDestination: {fileID: 1236883327}
     stopPlace: {fileID: 0}
-  - nextDestination: {fileID: 1805504020}
-    stopPlace: {fileID: 1630998866}
+  - nextDestination: {fileID: 42905603}
+    stopPlace: {fileID: 0}
   haveTrafficLight: 0
   trafficLights: []
   trafficRedLightOn: 0
@@ -29185,6 +29245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 329242921}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 774569340}
 --- !u!65 &1080080463
 BoxCollider:
@@ -29303,6 +29364,86 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4301846, guid: c925872ce3bfa384589bf34b953d5a65, type: 3}
+--- !u!1 &1089933885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1502282709630254, guid: 1d9ec10815d450e4ca92c59e3d1adb10,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1089933886}
+  - component: {fileID: 1089933888}
+  - component: {fileID: 1089933887}
+  m_Layer: 0
+  m_Name: Yellow (9)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1089933886
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4878177200478084, guid: 1d9ec10815d450e4ca92c59e3d1adb10,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1089933885}
+  m_LocalRotation: {x: 0.0003200117, y: 0.04361873, z: 0.0025278828, w: 0.999045}
+  m_LocalPosition: {x: -48.072, y: 0.67, z: -18.399}
+  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1}
+  m_Children: []
+  m_Father: {fileID: 432722020}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1089933887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1089933885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ebb22afadecb084a9cf0aaf4fce7cc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!108 &1089933888
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 108577469410689446, guid: 1d9ec10815d450e4ca92c59e3d1adb10,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1089933885}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 2
+  m_Color: {r: 0.7979358, g: 0.9191176, b: 0.24329586, a: 1}
+  m_Intensity: 10
+  m_Range: 2
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967007
+  m_Lightmapping: 1
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1 &1090535509
 GameObject:
   m_ObjectHideFlags: 0
@@ -29404,7 +29545,7 @@ Transform:
   m_Children:
   - {fileID: 393378429}
   m_Father: {fileID: 566259532}
-  m_RootOrder: 44
+  m_RootOrder: 45
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1093474402
 GameObject:
@@ -32197,7 +32338,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 39
+  m_RootOrder: 40
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1187108827
 MonoBehaviour:
@@ -33459,7 +33600,7 @@ Transform:
   m_Children:
   - {fileID: 409194495}
   m_Father: {fileID: 566259532}
-  m_RootOrder: 27
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1230622845 stripped
 GameObject:
@@ -35933,6 +36074,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 473836357}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 1753879445}
 --- !u!65 &1346128640
 BoxCollider:
@@ -36243,7 +36385,7 @@ Transform:
   m_Children:
   - {fileID: 2030803805}
   m_Father: {fileID: 566259532}
-  m_RootOrder: 22
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1362607754 stripped
 GameObject:
@@ -37484,7 +37626,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 36
+  m_RootOrder: 37
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1422468201
 MonoBehaviour:
@@ -38856,6 +38998,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 1173027842}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 601812525}
 --- !u!65 &1471625257
 BoxCollider:
@@ -39939,7 +40082,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 38
+  m_RootOrder: 39
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1505703121
 MonoBehaviour:
@@ -40548,6 +40691,59 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300170, guid: c925872ce3bfa384589bf34b953d5a65, type: 3}
+--- !u!1 &1529406138
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1529406141}
+  - component: {fileID: 1529406139}
+  - component: {fileID: 1529406140}
+  m_Layer: 0
+  m_Name: playerFrontTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1529406139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1529406138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eea1bd96ae6764144991f2b4d2353b30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &1529406140
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1529406138}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.75, y: 2, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1529406141
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1529406138}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 8.02}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2076577578}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1529464658 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 101136, guid: c925872ce3bfa384589bf34b953d5a65, type: 3}
@@ -41923,6 +42119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 852935077}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 895032565}
 --- !u!65 &1587385304
 BoxCollider:
@@ -42585,34 +42782,6 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300338, guid: c925872ce3bfa384589bf34b953d5a65, type: 3}
---- !u!1 &1630998865
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1630998866}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1630998866
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1630998865}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.102, y: 0, z: -10.46}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1805504019}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1634161438 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 102080, guid: c925872ce3bfa384589bf34b953d5a65, type: 3}
@@ -44400,6 +44569,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 1102444233}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 1579014194}
 --- !u!65 &1694894657
 BoxCollider:
@@ -44548,7 +44718,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 25
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1701620318 stripped
 GameObject:
@@ -76348,6 +76518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 2133600552}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 2109524440}
 --- !u!65 &1799641871
 BoxCollider:
@@ -76703,9 +76874,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1901131639}
-  - {fileID: 1630998866}
   m_Father: {fileID: 566259532}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1805504020
 MonoBehaviour:
@@ -77808,6 +77978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 1187087305}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 571213004}
 --- !u!65 &1840981076
 BoxCollider:
@@ -78503,7 +78674,7 @@ Transform:
   m_Children:
   - {fileID: 972732672}
   m_Father: {fileID: 566259532}
-  m_RootOrder: 28
+  m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1869580153 stripped
 GameObject:
@@ -80142,6 +80313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 920076094}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 151649794}
 --- !u!65 &1911305237
 BoxCollider:
@@ -80365,8 +80537,8 @@ MonoBehaviour:
   possibleNextDestinations:
   - nextDestination: {fileID: 1300352261}
     stopPlace: {fileID: 0}
-  - nextDestination: {fileID: 1805504020}
-    stopPlace: {fileID: 1630998866}
+  - nextDestination: {fileID: 42905603}
+    stopPlace: {fileID: 0}
   haveTrafficLight: 0
   trafficLights: []
   trafficRedLightOn: 0
@@ -80531,7 +80703,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 37
+  m_RootOrder: 38
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1925757103
 MonoBehaviour:
@@ -81251,6 +81423,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 1195265823}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 1504704111}
 --- !u!65 &1952080540
 BoxCollider:
@@ -81649,7 +81822,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 48
+  m_RootOrder: 49
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1977860784
 MonoBehaviour:
@@ -81941,7 +82114,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 40
+  m_RootOrder: 41
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1988756904
 MonoBehaviour:
@@ -86311,7 +86484,7 @@ Transform:
   m_Children:
   - {fileID: 378156486}
   m_Father: {fileID: 566259532}
-  m_RootOrder: 33
+  m_RootOrder: 34
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2028709556
 MonoBehaviour:
@@ -86554,6 +86727,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1176447568}
   AI_Car: {fileID: 128262383}
+  Player_Front_Trigger: {fileID: 1529406139}
   AI_Collider: {fileID: 333681783}
 --- !u!65 &2037672139
 BoxCollider:
@@ -87000,7 +87174,7 @@ Transform:
   m_Children:
   - {fileID: 1718963089}
   m_Father: {fileID: 566259532}
-  m_RootOrder: 43
+  m_RootOrder: 44
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2055114040
 GameObject:
@@ -87508,6 +87682,7 @@ Transform:
   m_Children:
   - {fileID: 917680277}
   - {fileID: 1838602857}
+  - {fileID: 1529406141}
   m_Father: {fileID: 1176447570}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -87620,7 +87795,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 30
+  m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2080366743
 MonoBehaviour:
@@ -87705,7 +87880,7 @@ Transform:
   m_Children:
   - {fileID: 94170444}
   m_Father: {fileID: 566259532}
-  m_RootOrder: 52
+  m_RootOrder: 53
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2082687967
 MonoBehaviour:
@@ -87861,7 +88036,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 566259532}
-  m_RootOrder: 32
+  m_RootOrder: 33
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2087294901
 MonoBehaviour:

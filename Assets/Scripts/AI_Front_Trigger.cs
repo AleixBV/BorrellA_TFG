@@ -6,6 +6,7 @@ public class AI_Front_Trigger : MonoBehaviour {
 
     [SerializeField] MSVehicleController Player;
     [SerializeField] AI_Car AI_Car;
+    [SerializeField] Player_Front_Trigger Player_Front_Trigger;
     [SerializeField] Collider AI_Collider;
 
     bool colliding_player = false;
@@ -17,13 +18,15 @@ public class AI_Front_Trigger : MonoBehaviour {
     {
         if(other.tag == "AICarsCollider")
         {
-            AI_Car.SetMaxSpeed(other.GetComponentInParent<AI_Car>().GetAgent().speed - (other.GetComponentInParent<AI_Car>().GetAgent().speed / 50.0f));
+            if (!avoiding_obstacle)
+                AI_Car.SetMaxSpeed(other.GetComponentInParent<AI_Car>().GetAgent().speed - (other.GetComponentInParent<AI_Car>().GetAgent().speed / 50.0f));
 
             colliding.Add(other);
         }
         else if (other.tag == "Player")
         {
-            AI_Car.SetMaxSpeed(Player.GetVelocity() - (Player.GetVelocity() / 50.0f));
+            if (!avoiding_obstacle)
+                AI_Car.SetMaxSpeed(Player.GetVelocity() - (Player.GetVelocity() / 50.0f));
 
             colliding_player = true;
         }
@@ -37,7 +40,6 @@ public class AI_Front_Trigger : MonoBehaviour {
             {
                 AI_Car.ResetMaxSpeed();
                 colliding.Remove(other);
-                colliding_player = false;
                 braking_timer = Public_Vars.braking_timer;
 
                 StartCoroutine(EnableAvoidingObstacles());
@@ -48,7 +50,7 @@ public class AI_Front_Trigger : MonoBehaviour {
                 if (Vector3.Distance(AI_Car.GetCollider().ClosestPoint(other.transform.position), other.ClosestPoint(AI_Car.transform.position)) > 4.0f)
                     new_speed = other.GetComponentInParent<AI_Car>().GetAgent().speed - (other.GetComponentInParent<AI_Car>().GetAgent().speed / 50.0f);
 
-                if (AI_Car.GetMaxSpeed() > new_speed)
+                if (!avoiding_obstacle && AI_Car.GetMaxSpeed() > new_speed)
                     AI_Car.SetMaxSpeed(new_speed);
             }
         }
@@ -60,7 +62,7 @@ public class AI_Front_Trigger : MonoBehaviour {
             if (Vector3.Distance(AI_Car.GetCollider().ClosestPoint(other.transform.position), other.ClosestPoint(AI_Car.transform.position)) > 4.0f)
                 new_speed = Player.GetVelocity() - (Player.GetVelocity() / 50.0f);
 
-            if (AI_Car.GetMaxSpeed() > new_speed)
+            if (!avoiding_obstacle && AI_Car.GetMaxSpeed() > new_speed)
                 AI_Car.SetMaxSpeed(new_speed);
         }
     }
@@ -88,26 +90,73 @@ public class AI_Front_Trigger : MonoBehaviour {
         {
             braking_timer -= Time.fixedDeltaTime;
 
-            if(braking_timer <= 0.0f)
+            if (AI_Car.GetMaxSpeed() <= 2.5f)
             {
-                AI_Car.PlayHorn();
+                if (braking_timer <= 0.0f)
+                {
+                    braking_timer = Public_Vars.braking_timer;
 
-                braking_timer = Public_Vars.braking_timer / 2;
-                StartCoroutine(EnableAvoidingObstacles());
+                    if (Player_Front_Trigger.GetColliding().Count > 0)
+                    {
+                        foreach (Collider col in Player_Front_Trigger.GetColliding())
+                        {
+                            if (IsCarStoppedRed(col))
+                        {
+                            braking_timer = col.transform.parent.GetComponent<AI_Car>().GetDestination().RemainingRedLightTime() + Public_Vars.braking_timer;
+                            return;
+                            }
+                        }
+                    }
+
+                    if (AI_Car.GetDestination().GetRedLightOn() && Vector3.Distance(Player.transform.position, AI_Car.GetDestination().transform.position) < 15.0f)
+                    {
+                        braking_timer = AI_Car.GetDestination().RemainingRedLightTime() + Public_Vars.braking_timer;
+                        return;
+                    }
+                    else if (Vector3.Distance(Player.transform.position, AI_Car.GetDestination().transform.position) < 15.0f)
+                    {
+                        AI_Car.SetDestinationRadius(Vector3.Distance(AI_Car.transform.position, AI_Car.GetDestination().transform.position) + 1.0f);
+                    }
+
+
+                    AI_Car.PlayHorn();
+
+                    StartCoroutine(EnableAvoidingObstacles());
+                }
+            }
+            else
+                braking_timer = Public_Vars.braking_timer;
+        }
+    }
+
+    private bool IsCarStoppedRed(Collider col)
+    {
+        bool ret = false;
+
+        if (col.transform.parent.GetComponent<AI_Car>().IsCarStoppedRed())
+        {
+            ret = true;
+        }
+        else
+        {
+            foreach (Collider collider in col.transform.parent.GetComponentInChildren<AI_Front_Trigger>().GetColliding())
+            {
+                if (IsCarStoppedRed(collider))
+                    return true;
             }
         }
+
+        return ret;
     }
 
     private IEnumerator EnableAvoidingObstacles()
     {
+        if (avoiding_obstacle)
+            yield break;
+
         AI_Car.GetAgent().obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.HighQualityObstacleAvoidance;
         avoiding_obstacle = true;
-        //GetComponent<BoxCollider>().enabled = false;
-
-        colliding.Clear();
-        colliding_player = false;
-
-        //AI_Car.GetAgent().SetDestination(AI_Car.GetAgent().destination);
+        
         AI_Car.ResetMaxSpeed();
 
         Debug.Log(AI_Car.name + " avoiding enabled");
@@ -116,11 +165,15 @@ public class AI_Front_Trigger : MonoBehaviour {
 
         AI_Car.GetAgent().obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;
         avoiding_obstacle = false;
-        //GetComponent<BoxCollider>().enabled = true;
     }
 
     public List<Collider> GetColliding()
     {
         return colliding;
+    }
+
+    public bool IsCollidingWithPlayer()
+    {
+        return colliding_player;
     }
 }
