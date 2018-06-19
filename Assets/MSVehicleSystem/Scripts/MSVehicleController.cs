@@ -1988,6 +1988,22 @@ public class MSVehicleController : MonoBehaviour {
         XInputDotNetPure.GamePad.SetVibration(XInputDotNetPure.PlayerIndex.One, 0.0f, 0.0f);
     }
 
+    private IEnumerator OnApplicationPause(bool pause)
+    {
+        yield return true;
+
+        if (pause)
+            XInputDotNetPure.GamePad.SetVibration(XInputDotNetPure.PlayerIndex.One, 0.0f, 0.0f);
+    }
+
+    private IEnumerator OnApplicationFocus(bool focus)
+    {
+        yield return true;
+
+        if (!focus)
+            XInputDotNetPure.GamePad.SetVibration(XInputDotNetPure.PlayerIndex.One, 0.0f, 0.0f);
+    }
+
     public float GetVelocity()
     {
         return ms_Rigidbody.velocity.magnitude / 2;

@@ -424,8 +424,12 @@ public class ScriptGUIController : MonoBehaviour {
 
     IEnumerator Loading()
     {
-        SceneManager.LoadScene("Main_Scene");
-        yield return true;
+        AsyncOperation scene = SceneManager.LoadSceneAsync("Main_Scene");
+        scene.allowSceneActivation = false;
+
+        yield return new WaitForSeconds(5.0f);
+
+        scene.allowSceneActivation = true;
     }
     
     private void SetButtonActive(GameObject Button, bool active)
