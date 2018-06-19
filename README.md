@@ -5,7 +5,9 @@ Prototype about driving in VR for my end of degree project.
 
 
 License:https://github.com/AleixBV/BorrellA_TFG/blob/master/LICENSE.txt
+
 Third party licenses:https://github.com/AleixBV/BorrellA_TFG/blob/master/LICENSE-3RD-PARTY.txt
+
 Repository:https://github.com/AleixBV/BorrellA_TFG
 
 ## Controls
